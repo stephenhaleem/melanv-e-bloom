@@ -22,7 +22,7 @@ const groups: { title: string; items: [string, string][] }[] = [
       ["How long does processing take?", "Orders are processed within 1–2 business days. Pre-orders ship as stated on the product page."],
       ["Do you ship internationally?", "Yes — we ship to 42+ countries, fully tracked and duty-clear where possible."],
       ["When will my order arrive?", "UK: 2–4 business days. EU: 4–7. North America: 5–8. Rest of world: 7–10."],
-      ["Is shipping free?", "Complimentary shipping on UK orders over £120 and international orders over £200."],
+      ["Is shipping free?", "Complimentary shipping on UK orders over £100 and international orders over £200."],
     ],
   },
   {

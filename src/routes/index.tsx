@@ -153,10 +153,10 @@ function ValueProps() {
 /* -------------------- COLLECTIONS -------------------- */
 function Collections() {
   const cats = [
-    { img: colTextured, name: "Textured Wigs", count: "24 pieces" },
-    { img: colUpart, name: "U-part Wigs", count: "12 pieces" },
-    { img: colBundles, name: "Bundles", count: "18 pieces" },
-    { img: colPonytail, name: "Ponytails", count: "9 pieces" },
+    { img: colTextured, name: "Back to Work", count: "Autumn · 3 pieces" },
+    { img: colUpart, name: "Signature Wigs", count: "3 pieces" },
+    { img: colBundles, name: "Summer Edit", count: "3 pieces" },
+    { img: colPonytail, name: "Crochet & Hot Tools", count: "6 pieces" },
   ];
   return (
     <section className="bg-cream py-24 md:py-32">
