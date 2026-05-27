@@ -7,6 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { CurrencyProvider } from "@/lib/currency";
 
 import appCss from "../styles.css?url";
 
@@ -110,7 +111,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <CurrencyProvider>
+        <Outlet />
+      </CurrencyProvider>
     </QueryClientProvider>
   );
 }

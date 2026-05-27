@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
+import { Price } from "@/lib/currency";
 import { Sparkles, Feather, HandHeart, Shield, Wand2, Gem, Star, Heart, Plus, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import hero from "@/assets/hero-melanvee.jpg";
@@ -96,9 +97,9 @@ function Hero() {
             />
             <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-auto bg-ivory/90 backdrop-blur p-5 md:p-6 max-w-xs">
               <div className="eyebrow mb-2">Featured</div>
-              <div className="font-serif text-xl text-espresso">Cocoa Curl — 22"</div>
+              <div className="font-serif text-xl text-espresso">Kimi Curl — 22"</div>
               <div className="text-sm text-muted-foreground mt-1">Glueless · Pre-styled · Beginner friendly</div>
-              <div className="mt-3 text-cocoa font-medium">£289</div>
+              <Price gbp={289} className="mt-3 block text-cocoa font-medium" />
             </div>
           </div>
         </div>
@@ -109,7 +110,7 @@ function Hero() {
 
 /* -------------------- MARQUEE -------------------- */
 function Marquee() {
-  const items = ["Pre-plucked HD lace", "Glueless ready", "100% raw textured hair", "Beginner friendly", "Free worldwide shipping over £120", "Klarna · Clearpay · Apple Pay"];
+  const items = ["Pre-plucked HD lace", "Glueless ready", "100% raw textured hair", "Beginner friendly", "Complimentary shipping over £100", "Klarna · Clearpay · Apple Pay"];
   return (
     <div className="bg-espresso text-cream py-4 overflow-hidden border-y border-cocoa/40">
       <div className="flex marquee whitespace-nowrap gap-12 text-[0.7rem] tracking-[0.3em] uppercase">
@@ -152,10 +153,10 @@ function ValueProps() {
 /* -------------------- COLLECTIONS -------------------- */
 function Collections() {
   const cats = [
-    { img: colTextured, name: "Textured Wigs", count: "24 pieces" },
-    { img: colUpart, name: "U-part Wigs", count: "12 pieces" },
-    { img: colBundles, name: "Bundles", count: "18 pieces" },
-    { img: colPonytail, name: "Ponytails", count: "9 pieces" },
+    { img: colTextured, name: "Back to Work", count: "Autumn · 3 pieces" },
+    { img: colUpart, name: "Signature Wigs", count: "3 pieces" },
+    { img: colBundles, name: "Summer Edit", count: "3 pieces" },
+    { img: colPonytail, name: "Crochet & Hot Tools", count: "6 pieces" },
   ];
   return (
     <section className="bg-cream py-24 md:py-32">
@@ -195,10 +196,10 @@ function Collections() {
 
 /* -------------------- BESTSELLERS -------------------- */
 const products = [
-  { name: "Cocoa Curl Glueless", price: 289, length: "22\"", img: colTextured, rating: 4.9, reviews: 412, tag: "Bestseller" },
-  { name: "Ivory Straight U-part", price: 215, length: "20\"", img: colUpart, rating: 4.8, reviews: 287, tag: "New" },
-  { name: "Honey Body Wave Bundles", price: 340, length: "3×24\"", img: colBundles, rating: 4.9, reviews: 521, tag: null },
-  { name: "Sleek Onyx Ponytail", price: 95, length: "26\"", img: colPonytail, rating: 4.7, reviews: 198, tag: "Loved" },
+  { name: "Kimi Curl", price: 289, length: "22\"", img: colTextured, rating: 4.9, reviews: 412, tag: "Bestseller" },
+  { name: "Zuri Kinky Straight", price: 295, length: "20\"", img: colUpart, rating: 4.9, reviews: 84, tag: "Autumn" },
+  { name: "Jaelle Bob Wig", price: 235, length: "12\"", img: colBundles, rating: 4.9, reviews: 221, tag: "Loved" },
+  { name: "Burmese Crochet", price: 145, length: "18\"", img: colPonytail, rating: 4.8, reviews: 92, tag: "New" },
 ];
 
 function Bestsellers() {
@@ -246,7 +247,7 @@ function ProductCard({ p }: { p: typeof products[number] }) {
         <h3 className="font-serif text-lg text-espresso">{p.name}</h3>
         <div className="flex items-center justify-between text-sm">
           <span className="text-muted-foreground">{p.length}</span>
-          <span className="text-cocoa font-medium">£{p.price}</span>
+          <Price gbp={p.price} className="text-cocoa font-medium" />
         </div>
       </div>
     </div>

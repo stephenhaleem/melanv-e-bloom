@@ -10,6 +10,7 @@ export function Footer() {
           <p className="text-cream/70 max-w-sm text-sm leading-relaxed">
             Effortless beauty, made to feel like yours. Premium textured hair, designed for the women who wear it.
           </p>
+          <a href="mailto:customercare@melanvee.com" className="block text-sm text-cream/85 hover:text-blush">customercare@melanvee.com</a>
           <form className="flex gap-2 max-w-sm pt-2">
             <input
               type="email"
@@ -24,11 +25,11 @@ export function Footer() {
         </div>
 
         <FooterCol title="Shop" links={[
-          ["Textured Wigs", "/shop"],
-          ["U-part Wigs", "/shop"],
-          ["V-part Wigs", "/shop"],
-          ["Bundles", "/shop"],
-          ["Ponytails", "/shop"],
+          ["Back to Work", "/shop"],
+          ["Signature Wigs", "/shop"],
+          ["Summer Edit", "/shop"],
+          ["Crochet", "/shop"],
+          ["Hot Tools", "/shop"],
         ]} />
 
         <FooterCol title="Care" links={[
@@ -41,6 +42,7 @@ export function Footer() {
 
         <FooterCol title="House" links={[
           ["About Us", "/about"],
+          ["Collab With Us", "/collab"],
           ["Contact", "/contact"],
           ["Privacy", "/faq"],
           ["Terms", "/faq"],
