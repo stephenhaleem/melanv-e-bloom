@@ -32,7 +32,7 @@ function ContactPage() {
         <div className="grid lg:grid-cols-2 gap-12">
           <div className="space-y-6">
             <div className="bg-cream p-8 space-y-5">
-              <ContactRow icon={Mail} title="Email" value="care@melanvee.com" />
+              <ContactRow icon={Mail} title="Email" value="customercare@melanvee.com" />
               <ContactRow icon={MessageCircle} title="WhatsApp" value="+44 7000 000 000" />
               <ContactRow icon={Instagram} title="Instagram" value="@melanvee" />
               <ContactRow icon={Clock} title="Reply time" value="Within 1 hour · Mon–Sat 9–6 GMT" />
