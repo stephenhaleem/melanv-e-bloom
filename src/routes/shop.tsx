@@ -63,16 +63,17 @@ const items: Product[] = [
   { name: "Automatic Curler", price: 165, length: "Auto", img: textureCloseup, rating: 4.8, reviews: 39, tag: "New", construction: "Hot Tools", drop: "Tools" },
 ];
 
-const filters = ["All", "U-Part", "V-Part", "Half Wig", "Full Wig", "Crochet", "Hot Tools"] as const;
+const filters = ["All", "U/V Part Wigs", "Half Wig", "Full Wig", "Crochet", "Hot Tools"] as const;
 
 function ShopPage() {
   const [active, setActive] = useState<(typeof filters)[number]>("All");
   const gridRef = useRef<HTMLDivElement | null>(null);
 
-  const visible = useMemo(
-    () => (active === "All" ? items : items.filter((i) => i.construction === active)),
-    [active]
-  );
+  const visible = useMemo(() => {
+    if (active === "All") return items;
+    if (active === "U/V Part Wigs") return items.filter((i) => i.construction === "U-Part" || i.construction === "V-Part");
+    return items.filter((i) => i.construction === active);
+  }, [active]);
 
   const backToWork = items.filter((i) => i.drop === "Back to Work");
   const hotTools = items.filter((i) => i.construction === "Hot Tools");
@@ -107,7 +108,7 @@ function ShopPage() {
                 </div>
               ))}
             </div>
-            <button onClick={() => setFilter("U-Part")} className="inline-flex items-center gap-2 border-b border-cream pb-1 text-[0.72rem] tracking-[0.25em] uppercase hover:text-blush hover:border-blush transition">
+            <button onClick={() => setFilter("U/V Part Wigs")} className="inline-flex items-center gap-2 border-b border-cream pb-1 text-[0.72rem] tracking-[0.25em] uppercase hover:text-blush hover:border-blush transition">
               Shop the edit <ArrowRight size={14} />
             </button>
           </div>
