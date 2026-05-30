@@ -4,6 +4,7 @@ import { Search, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { CurrencySwitcher } from "./CurrencySwitcher";
 
 const NAV = [
+  { to: "/", label: "Home" },
   { to: "/shop", label: "Shop" },
   { to: "/about", label: "About" },
   { to: "/hair-care", label: "Hair Care" },
