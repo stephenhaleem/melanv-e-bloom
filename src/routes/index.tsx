@@ -50,43 +50,11 @@ function HomePage() {
 /* -------------------- HERO -------------------- */
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-cream">
-      <div className="container-luxe grid lg:grid-cols-12 gap-10 lg:gap-16 pt-12 pb-20 lg:pt-20 lg:pb-32 items-center">
-        <div className="lg:col-span-5 fade-up space-y-8 order-2 lg:order-1">
-          <div className="eyebrow">The Cocoa Collection · No.04</div>
-          <h1 className="font-serif text-5xl md:text-7xl leading-[1.02] text-espresso text-balance">
-            Made to feel<br />
-            <em className="not-italic text-cocoa">like yours.</em>
-          </h1>
-          <p className="text-base md:text-lg text-muted-foreground max-w-md leading-relaxed">
-            Textured wigs, protective styles, and quietly luxurious hair — designed for the
-            way she actually lives. Realism without effort. Softness without weight.
-          </p>
-          <div className="flex flex-wrap gap-3 pt-2">
-            <Link
-              to="/shop"
-              className="inline-flex items-center justify-center bg-cocoa text-cream px-8 py-4 text-[0.72rem] tracking-[0.28em] uppercase hover:bg-espresso transition-colors"
-            >
-              Shop the Collection
-            </Link>
-            <Link
-              to="/shop"
-              className="inline-flex items-center justify-center border border-cocoa text-cocoa px-8 py-4 text-[0.72rem] tracking-[0.28em] uppercase hover:bg-cocoa hover:text-cream transition-colors"
-            >
-              Explore Textures
-            </Link>
-          </div>
-          <div className="flex items-center gap-6 pt-6 text-xs text-muted-foreground">
-            <div className="flex items-center gap-1.5">
-              {[1,2,3,4,5].map(i => <Star key={i} size={12} className="fill-cocoa text-cocoa" />)}
-              <span className="ml-1">4.9 · 2,800+ reviews</span>
-            </div>
-            <div className="hidden sm:block">Worn in 42 countries</div>
-          </div>
-        </div>
-
-        <div className="lg:col-span-7 order-1 lg:order-2 relative">
-          <div className="relative aspect-[4/5] lg:aspect-[5/6] overflow-hidden">
+    <section className="bg-ivory">
+      {/* Mobile-first editorial composition */}
+      <div className="container-luxe pt-4 pb-20 md:pt-8 md:pb-32">
+        <div className="relative">
+          <div className="aspect-[4/5] md:aspect-[16/10] w-full overflow-hidden bg-sand">
             <img
               src={hero}
               alt="A woman wearing a Melanvée textured wig, photographed in warm cocoa light"
@@ -95,11 +63,56 @@ function Hero() {
               height={1280}
               fetchPriority="high"
             />
-            <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-auto bg-ivory/90 backdrop-blur p-5 md:p-6 max-w-xs">
-              <div className="eyebrow mb-2">Featured</div>
-              <div className="font-serif text-xl text-espresso">Kimi Curl — 22"</div>
-              <div className="text-sm text-muted-foreground mt-1">Glueless · Pre-styled · Beginner friendly</div>
-              <Price gbp={289} className="mt-3 block text-cocoa font-medium" />
+          </div>
+
+          {/* Editorial product inset — offset, flush-right, hairline border */}
+          <div className="absolute bottom-6 left-6 right-0 md:bottom-10 md:left-auto md:right-10 md:max-w-sm bg-ivory/95 backdrop-blur-md p-7 md:p-8 border-l border-border shadow-[0_30px_60px_-30px_rgba(44,24,16,0.18)]">
+            <span className="block text-[0.6rem] tracking-[0.3em] uppercase text-muted-foreground mb-3 font-medium">
+              Signature Selection
+            </span>
+            <h2 className="font-serif text-2xl md:text-3xl font-light italic leading-none mb-3 text-espresso">
+              Kimi Curl <span className="not-italic">— 22"</span>
+            </h2>
+            <p className="text-[0.7rem] tracking-wide text-muted-foreground leading-relaxed mb-5 font-light">
+              Glueless · Pre-styled · Beginner friendly
+            </p>
+            <div className="flex items-center justify-between">
+              <Price gbp={289} className="font-serif text-lg text-espresso" />
+              <Link to="/shop" className="text-[0.6rem] uppercase tracking-[0.2em] border-b border-espresso pb-1 text-espresso">
+                View details
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Editorial caption block — generous negative space */}
+        <div className="mt-24 md:mt-32 max-w-xl md:px-4">
+          <div className="flex items-center gap-3 mb-8">
+            <span className="h-px w-6 bg-border" />
+            <span className="text-[0.65rem] tracking-[0.32em] uppercase text-muted-foreground font-medium">
+              The Cocoa Collection · No.04
+            </span>
+          </div>
+          <h1 className="font-serif text-5xl md:text-7xl leading-[1.05] font-light text-espresso text-balance mb-8">
+            Made to <span className="italic">feel</span><br />
+            like yours.
+          </h1>
+          <p className="text-muted-foreground text-[0.95rem] md:text-base leading-[1.9] font-light max-w-md mb-10">
+            Textured wigs and protective styles, crafted with quiet luxury in mind —
+            designed for the woman who values her time as much as her aesthetic.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 max-w-md">
+            <Link
+              to="/shop"
+              className="flex-1 text-center px-10 py-4 border border-espresso text-[0.65rem] uppercase tracking-[0.28em] text-espresso hover:bg-espresso hover:text-cream transition-colors duration-500"
+            >
+              Discover the Collection
+            </Link>
+          </div>
+          <div className="flex items-center gap-6 pt-10 text-[0.7rem] text-muted-foreground tracking-wide">
+            <div className="flex items-center gap-2">
+              {[1,2,3,4,5].map(i => <Star key={i} size={10} className="fill-cocoa text-cocoa" />)}
+              <span className="ml-1">4.9 · 2,800+ reviews</span>
             </div>
           </div>
         </div>
@@ -107,6 +120,7 @@ function Hero() {
     </section>
   );
 }
+
 
 /* -------------------- MARQUEE -------------------- */
 function Marquee() {
