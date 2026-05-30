@@ -18,7 +18,7 @@ export const Route = createFileRoute("/shop")({
 });
 
 function ShopPage() {
-  const sectionRefs = useRef<Record<Segment, HTMLDivElement | null>>({
+  const sectionRefs = useRef<Record<Segment, HTMLElement | null>>({
     "U/V Part Wigs": null,
     "Half Wig": null,
     Crochet: null,
@@ -105,7 +105,7 @@ function ShopPage() {
         return (
           <section
             key={seg}
-            ref={(el: HTMLDivElement | null) => {
+            ref={(el: HTMLElement | null) => {
               sectionRefs.current[seg] = el;
             }}
             className={isDark ? "bg-cream" : "bg-ivory"}
