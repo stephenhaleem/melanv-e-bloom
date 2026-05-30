@@ -105,7 +105,7 @@ function ShopPage() {
         return (
           <section
             key={seg}
-            ref={(el) => {
+            ref={(el: HTMLDivElement | null) => {
               sectionRefs.current[seg] = el;
             }}
             className={isDark ? "bg-cream" : "bg-ivory"}
