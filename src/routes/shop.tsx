@@ -63,7 +63,7 @@ const items: Product[] = [
   { name: "Automatic Curler", price: 165, length: "Auto", img: textureCloseup, rating: 4.8, reviews: 39, tag: "New", construction: "Hot Tools", drop: "Tools" },
 ];
 
-const filters = ["All", "U-Part", "V-Part", "Half Wig", "Full Wig", "Crochet", "Hot Tools"] as const;
+const filters = ["All", "U/V Part Wigs", "Half Wig", "Full Wig", "Crochet", "Hot Tools"] as const;
 
 function ShopPage() {
   const [active, setActive] = useState<(typeof filters)[number]>("All");
