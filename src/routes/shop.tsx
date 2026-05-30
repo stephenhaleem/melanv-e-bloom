@@ -108,7 +108,7 @@ function ShopPage() {
                 </div>
               ))}
             </div>
-            <button onClick={() => setFilter("U-Part")} className="inline-flex items-center gap-2 border-b border-cream pb-1 text-[0.72rem] tracking-[0.25em] uppercase hover:text-blush hover:border-blush transition">
+            <button onClick={() => setFilter("U/V Part Wigs")} className="inline-flex items-center gap-2 border-b border-cream pb-1 text-[0.72rem] tracking-[0.25em] uppercase hover:text-blush hover:border-blush transition">
               Shop the edit <ArrowRight size={14} />
             </button>
           </div>
