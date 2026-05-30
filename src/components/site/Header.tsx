@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Search, Heart, ShoppingBag, Menu, X } from "lucide-react";
 import { CurrencySwitcher } from "./CurrencySwitcher";
+import { useCart } from "@/lib/cart";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -15,6 +16,7 @@ const NAV = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { count, setOpen: setCartOpen } = useCart();
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-ivory/85 backdrop-blur">
       <div className="bg-cocoa text-cream text-[0.68rem] tracking-[0.25em] uppercase py-2">
@@ -56,9 +58,9 @@ export function Header() {
         <div className="flex items-center gap-4 text-cocoa md:ml-8">
           <button aria-label="Search" className="hover:text-espresso"><Search size={18} /></button>
           <button aria-label="Wishlist" className="hover:text-espresso hidden sm:block"><Heart size={18} /></button>
-          <button aria-label="Bag" className="hover:text-espresso relative">
+          <button onClick={() => setCartOpen(true)} aria-label="Bag" className="hover:text-espresso relative">
             <ShoppingBag size={18} />
-            <span className="absolute -top-1.5 -right-2 text-[0.6rem] bg-cocoa text-cream rounded-full w-4 h-4 flex items-center justify-center">0</span>
+            <span className="absolute -top-1.5 -right-2 text-[0.6rem] bg-cocoa text-cream rounded-full w-4 h-4 flex items-center justify-center">{count}</span>
           </button>
         </div>
       </div>
