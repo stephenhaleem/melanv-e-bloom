@@ -69,10 +69,11 @@ function ShopPage() {
   const [active, setActive] = useState<(typeof filters)[number]>("All");
   const gridRef = useRef<HTMLDivElement | null>(null);
 
-  const visible = useMemo(
-    () => (active === "All" ? items : items.filter((i) => i.construction === active)),
-    [active]
-  );
+  const visible = useMemo(() => {
+    if (active === "All") return items;
+    if (active === "U/V Part Wigs") return items.filter((i) => i.construction === "U-Part" || i.construction === "V-Part");
+    return items.filter((i) => i.construction === active);
+  }, [active]);
 
   const backToWork = items.filter((i) => i.drop === "Back to Work");
   const hotTools = items.filter((i) => i.construction === "Hot Tools");
