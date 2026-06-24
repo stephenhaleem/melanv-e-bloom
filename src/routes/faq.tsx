@@ -51,7 +51,7 @@ const groups: { title: string; items: [string, string][] }[] = [
   {
     title: "Texture & Beginners",
     items: [
-      ["I'm a beginner — which wig should I start with?", "Our glueless U-part and pre-styled cocoa curl units are designed for first installs."],
+      ["I'm a beginner — which wig should I start with?", "Our glueless U-part and pre-styled curl units are designed for first installs."],
       ["Can you help me match my natural texture?", "Yes, free of charge. Message us a clear photo on WhatsApp and our team will recommend."],
     ],
   },

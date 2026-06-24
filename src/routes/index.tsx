@@ -57,7 +57,7 @@ function Hero() {
           <div className="aspect-[4/5] md:aspect-[16/10] w-full overflow-hidden bg-sand">
             <img
               src={hero}
-              alt="A woman wearing a Melanvée textured wig, photographed in warm cocoa light"
+              alt="A woman wearing a Melanvée textured wig, photographed in rich burgundy light"
               className="w-full h-full object-cover"
               width={1600}
               height={1280}
@@ -90,7 +90,7 @@ function Hero() {
           <div className="flex items-center gap-3 mb-8">
             <span className="h-px w-6 bg-border" />
             <span className="text-[0.65rem] tracking-[0.32em] uppercase text-muted-foreground font-medium">
-              The Cocoa Collection · No.04
+              The Burgundy Collection · No.04
             </span>
           </div>
           <h1 className="font-serif text-5xl md:text-7xl leading-[1.05] font-light text-espresso text-balance mb-8">
