@@ -30,6 +30,9 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
+  --color-burgundy: var(--burgundy);
+  --color-burgundy-deep: var(--burgundy-deep);
+  --color-burgundy-light: var(--burgundy-light);
   --color-cocoa: var(--cocoa);
   --color-cocoa-deep: var(--cocoa-deep);
   --color-espresso: var(--espresso);
