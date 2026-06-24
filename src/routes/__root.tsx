@@ -1,4 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+@source "../src";
 import {
   Outlet,
   Link,
