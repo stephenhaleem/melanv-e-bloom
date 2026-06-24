@@ -47,18 +47,22 @@
 :root {
   --radius: 0.25rem;
 
-  /* Brand palette — warm cocoa luxury */
-  --cocoa: oklch(0.36 0.045 40);            /* rich cocoa brown #4B2E2B */
-  --cocoa-deep: oklch(0.28 0.04 38);
-  --espresso: oklch(0.20 0.03 36);
-  --cream: oklch(0.965 0.018 75);           /* warm ivory */
-  --ivory: oklch(0.985 0.012 80);
-  --blush: oklch(0.86 0.035 30);            /* soft dusty blush */
-  --sand: oklch(0.90 0.025 75);
-  --gold: oklch(0.72 0.10 75);
+  /* Brand palette — deep burgundy & ivory */
+  --burgundy: oklch(0.34 0.10 12);            /* deep rich burgundy #5C0A1E */
+  --burgundy-deep: oklch(0.26 0.09 10);      /* black cherry */
+  --burgundy-light: oklch(0.43 0.11 14);     /* warm burgundy */
+  --ivory: oklch(0.985 0.01 80);             /* warm ivory */
+  --cream: oklch(0.96 0.015 75);              /* soft cream */
+  --blush: oklch(0.84 0.04 20);               /* dusty burgundy blush */
+  --sand: oklch(0.90 0.02 70);                /* warm sand */
+  --gold: oklch(0.72 0.09 75);                /* muted champagne gold */
 
+  /* Map legacy tokens to burgundy family */
+  --cocoa: var(--burgundy);
+  --cocoa-deep: var(--burgundy-deep);
+  --espresso: var(--burgundy-deep);
   --background: var(--ivory);
-  --foreground: var(--espresso);
+  --foreground: var(--burgundy-deep);
 
   --card: var(--ivory);
   --card-foreground: var(--espresso);
