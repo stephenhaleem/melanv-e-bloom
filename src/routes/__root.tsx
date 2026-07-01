@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { CurrencyProvider } from "@/lib/currency";
+import { CartProvider } from "@/lib/cart";
 
 import appCss from "../styles.css?url";
 
