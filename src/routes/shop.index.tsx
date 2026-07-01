@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { Price } from "@/lib/currency";
 import { PRODUCTS, SEGMENTS, SEGMENT_COPY, type Segment, type Product } from "@/lib/products";
 
-export const Route = createFileRoute("/shop")({
+export const Route = createFileRoute("/shop/")({
   head: () => ({
     meta: [
       { title: "Shop — MELANVÉE" },
