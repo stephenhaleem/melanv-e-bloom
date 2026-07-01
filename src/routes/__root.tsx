@@ -113,7 +113,9 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <CurrencyProvider>
-        <Outlet />
+        <CartProvider>
+          <Outlet />
+        </CartProvider>
       </CurrencyProvider>
     </QueryClientProvider>
   );
