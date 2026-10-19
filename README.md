@@ -254,11 +254,14 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Prefer working locally? You need Node.js and Bun.
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+```powershell
+git clone https://github.com/stephenhaleem/melanv-e-bloom.git
+Set-Location melanv-e-bloom
+bun install
+Copy-Item .env.example .env.local
+bun run dev
 ```
+
+Set the values from `.env.example` in `.env.local` for local development and in the deployment provider’s environment settings for production. `.env.local` is ignored by Git. The shop and cart use the live Shopify catalog; product reviews use the existing Supabase project; newsletter, contact, and collaboration forms use Klaviyo and Formspree.

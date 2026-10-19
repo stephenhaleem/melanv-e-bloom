@@ -1,88 +1,46 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 import { Price, useCurrency, formatPrice } from "./currency";
-import { PRODUCTS, type Product } from "./products";
-
-export type CartLine = {
-  slug: string;
-  length: number | null;
-  qty: number;
-};
+import { useShopifyCart } from "./shopify-cart";
+import type { CartDisplayLine } from "./shopify-cart";
 
 type Ctx = {
-  lines: CartLine[];
+  lines: CartDisplayLine[];
   count: number;
   subtotal: number;
-  add: (slug: string, length: number | null, qty?: number) => void;
-  remove: (slug: string, length: number | null) => void;
-  setQty: (slug: string, length: number | null, qty: number) => void;
-  clear: () => void;
+  add: (variantId: string, qty?: number) => Promise<void>;
+  remove: (lineId: string) => Promise<void>;
+  setQty: (lineId: string, qty: number) => Promise<void>;
   open: boolean;
   setOpen: (v: boolean) => void;
+  checkout: () => Promise<void>;
+  error: string | null;
 };
 
 const CartCtx = createContext<Ctx | null>(null);
 
-const KEY = "melanvee:cart";
-
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [lines, setLines] = useState<CartLine[]>([]);
+  const cart = useShopifyCart();
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (raw) setLines(JSON.parse(raw));
-    } catch {}
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") localStorage.setItem(KEY, JSON.stringify(lines));
-  }, [lines]);
-
   const value = useMemo<Ctx>(() => {
-    const find = (slug: string, length: number | null) =>
-      lines.findIndex((l) => l.slug === slug && l.length === length);
-
-    const subtotal = lines.reduce((sum, l) => {
-      const p = PRODUCTS.find((x) => x.slug === l.slug);
-      return sum + (p ? p.price * l.qty : 0);
-    }, 0);
-
     return {
-      lines,
-      count: lines.reduce((n, l) => n + l.qty, 0),
-      subtotal,
+      lines: cart.lines,
+      count: cart.count,
+      subtotal: cart.totalGBP,
       open,
       setOpen,
-      add: (slug, length, qty = 1) => {
-        setLines((prev) => {
-          const i = prev.findIndex((l) => l.slug === slug && l.length === length);
-          if (i >= 0) {
-            const next = [...prev];
-            next[i] = { ...next[i], qty: next[i].qty + qty };
-            return next;
-          }
-          return [...prev, { slug, length, qty }];
-        });
+      add: async (variantId, qty = 1) => {
+        await cart.addToCart(variantId, qty);
         setOpen(true);
       },
-      remove: (slug, length) =>
-        setLines((prev) => prev.filter((l) => !(l.slug === slug && l.length === length))),
-      setQty: (slug, length, qty) =>
-        setLines((prev) => {
-          const i = find(slug, length);
-          if (i < 0) return prev;
-          if (qty <= 0) return prev.filter((_, idx) => idx !== i);
-          const next = [...prev];
-          next[i] = { ...next[i], qty };
-          return next;
-        }),
-      clear: () => setLines([]),
+      remove: cart.removeLine,
+      setQty: cart.updateQty,
+      checkout: () => cart.checkout(""),
+      error: cart.error,
     };
-  }, [lines, open]);
+  }, [cart, open]);
 
   return <CartCtx.Provider value={value}>{children}</CartCtx.Provider>;
 }
@@ -94,8 +52,19 @@ export function useCart() {
 }
 
 export function CartDrawer() {
-  const { open, setOpen, lines, subtotal, setQty, remove, count } = useCart();
+  const { open, setOpen, lines, subtotal, setQty, remove, count, checkout, error } = useCart();
   const { currency } = useCurrency();
+  const [actionError, setActionError] = useState(false);
+
+  async function performCartAction(action: () => Promise<void>) {
+    setActionError(false);
+    try {
+      await action();
+    } catch (error) {
+      console.error("[shopify] Cart action failed:", error);
+      setActionError(true);
+    }
+  }
 
   return (
     <>
@@ -119,12 +88,21 @@ export function CartDrawer() {
               {count} {count === 1 ? "piece" : "pieces"}
             </div>
           </div>
-          <button onClick={() => setOpen(false)} aria-label="Close" className="text-cocoa hover:text-espresso">
+          <button
+            onClick={() => setOpen(false)}
+            aria-label="Close"
+            className="text-cocoa hover:text-espresso"
+          >
             <X size={20} />
           </button>
         </div>
 
         <div className="flex-1 overflow-y-auto">
+          {error && (
+            <p role="alert" className="px-6 py-4 text-sm text-destructive">
+              {error}
+            </p>
+          )}
           {lines.length === 0 ? (
             <div className="p-10 text-center space-y-4">
               <ShoppingBag size={24} className="mx-auto text-cocoa/40" />
@@ -140,27 +118,33 @@ export function CartDrawer() {
           ) : (
             <ul className="divide-y divide-border">
               {lines.map((line) => {
-                const p = PRODUCTS.find((x) => x.slug === line.slug) as Product | undefined;
-                if (!p) return null;
                 return (
-                  <li key={`${line.slug}-${line.length ?? "x"}`} className="flex gap-4 p-6">
+                  <li key={line.lineId} className="flex gap-4 p-6">
                     <div className="w-20 h-24 bg-sand overflow-hidden flex-shrink-0">
-                      <img src={p.img} alt={p.name} className="w-full h-full object-cover" />
+                      <img
+                        src={line.image}
+                        alt={line.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="flex-1 flex flex-col">
                       <div className="flex justify-between gap-2">
                         <div>
-                          <h3 className="font-serif text-base text-espresso leading-tight">{p.name}</h3>
+                          <h3 className="font-serif text-base text-espresso leading-tight">
+                            {line.name}
+                          </h3>
                           <p className="text-[0.7rem] tracking-[0.2em] uppercase text-muted-foreground mt-1">
-                            {line.length ? `${line.length}"` : p.segment}
+                            {line.variantTitle}
                           </p>
                         </div>
-                        <Price gbp={p.price * line.qty} className="text-cocoa text-sm" />
+                        <Price gbp={line.priceGBP * line.qty} className="text-cocoa text-sm" />
                       </div>
                       <div className="flex items-center justify-between mt-auto pt-3">
                         <div className="flex items-center border border-border">
                           <button
-                            onClick={() => setQty(line.slug, line.length, line.qty - 1)}
+                            onClick={() =>
+                              void performCartAction(() => setQty(line.lineId, line.qty - 1))
+                            }
                             className="w-7 h-7 flex items-center justify-center text-cocoa hover:bg-cream"
                             aria-label="Decrease"
                           >
@@ -168,7 +152,9 @@ export function CartDrawer() {
                           </button>
                           <span className="w-7 text-center text-xs">{line.qty}</span>
                           <button
-                            onClick={() => setQty(line.slug, line.length, line.qty + 1)}
+                            onClick={() =>
+                              void performCartAction(() => setQty(line.lineId, line.qty + 1))
+                            }
                             className="w-7 h-7 flex items-center justify-center text-cocoa hover:bg-cream"
                             aria-label="Increase"
                           >
@@ -176,7 +162,7 @@ export function CartDrawer() {
                           </button>
                         </div>
                         <button
-                          onClick={() => remove(line.slug, line.length)}
+                          onClick={() => void performCartAction(() => remove(line.lineId))}
                           className="text-[0.65rem] tracking-[0.22em] uppercase text-muted-foreground hover:text-espresso"
                         >
                           Remove
@@ -201,7 +187,15 @@ export function CartDrawer() {
                 ? "Complimentary shipping unlocked."
                 : `Add ${formatPrice(100 - subtotal, currency)} for complimentary shipping.`}
             </p>
-            <button className="w-full bg-cocoa text-cream py-4 text-[0.72rem] tracking-[0.3em] uppercase hover:bg-espresso transition">
+            {actionError && (
+              <p role="alert" className="text-sm text-destructive">
+                The cart couldn’t be updated. Please try again.
+              </p>
+            )}
+            <button
+              onClick={() => void performCartAction(checkout)}
+              className="w-full bg-cocoa text-cream py-4 text-[0.72rem] tracking-[0.3em] uppercase hover:bg-espresso transition"
+            >
               Checkout
             </button>
             <button
