@@ -247,7 +247,7 @@ function ProductPage() {
         </div>
       </section>
 
-      <ProductReviews productId={product.id} />
+      <ProductReviews productId={product.handle} />
 
       {related.length > 0 && (
         <section className="container-luxe py-16 md:py-20 border-t border-border mt-8">
