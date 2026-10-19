@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 import { Price, useCurrency, formatPrice } from "./currency";
@@ -9,12 +9,13 @@ type Ctx = {
   lines: CartDisplayLine[];
   count: number;
   subtotal: number;
+  note: string;
   add: (variantId: string, qty?: number) => Promise<void>;
   remove: (lineId: string) => Promise<void>;
   setQty: (lineId: string, qty: number) => Promise<void>;
   open: boolean;
   setOpen: (v: boolean) => void;
-  checkout: () => Promise<void>;
+  checkout: (note: string) => Promise<void>;
   error: string | null;
 };
 
@@ -29,6 +30,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       lines: cart.lines,
       count: cart.count,
       subtotal: cart.totalGBP,
+      note: cart.note,
       open,
       setOpen,
       add: async (variantId, qty = 1) => {
@@ -37,7 +39,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       },
       remove: cart.removeLine,
       setQty: cart.updateQty,
-      checkout: () => cart.checkout(""),
+      checkout: cart.checkout,
       error: cart.error,
     };
   }, [cart, open]);
@@ -52,9 +54,23 @@ export function useCart() {
 }
 
 export function CartDrawer() {
-  const { open, setOpen, lines, subtotal, setQty, remove, count, checkout, error } = useCart();
+  const {
+    open,
+    setOpen,
+    lines,
+    subtotal,
+    setQty,
+    remove,
+    count,
+    note: cartNote,
+    checkout,
+    error,
+  } = useCart();
   const { currency } = useCurrency();
   const [actionError, setActionError] = useState(false);
+  const [note, setNote] = useState(cartNote);
+
+  useEffect(() => setNote(cartNote), [cartNote]);
 
   async function performCartAction(action: () => Promise<void>) {
     setActionError(false);
@@ -187,13 +203,24 @@ export function CartDrawer() {
                 ? "Complimentary shipping unlocked."
                 : `Add ${formatPrice(100 - subtotal, currency)} for complimentary shipping.`}
             </p>
+            <label className="block space-y-2 text-[0.7rem] tracking-[0.18em] uppercase text-cocoa">
+              Order note (optional)
+              <textarea
+                value={note}
+                onChange={(event) => setNote(event.target.value)}
+                maxLength={500}
+                rows={3}
+                placeholder="Add a note for your order"
+                className="w-full resize-y bg-ivory border border-border px-3 py-3 text-sm normal-case tracking-normal text-espresso"
+              />
+            </label>
             {actionError && (
               <p role="alert" className="text-sm text-destructive">
                 The cart couldn’t be updated. Please try again.
               </p>
             )}
             <button
-              onClick={() => void performCartAction(checkout)}
+              onClick={() => void performCartAction(() => checkout(note))}
               className="w-full bg-cocoa text-cream py-4 text-[0.72rem] tracking-[0.3em] uppercase hover:bg-espresso transition"
             >
               Checkout

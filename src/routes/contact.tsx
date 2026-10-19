@@ -9,12 +9,12 @@ export const Route = createFileRoute("/contact")({
       { title: "Contact — MELANVÉE" },
       {
         name: "description",
-        content: "Speak with the Melanvée concierge — texture matching, orders, returns and care.",
+        content: "Reach MELANVÉE. WhatsApp us, email us, or send a message — we read every one.",
       },
       { property: "og:title", content: "Contact MELANVÉE" },
       {
         property: "og:description",
-        content: "Speak with the Melanvée concierge — texture matching, orders, returns and care.",
+        content: "Reach MELANVÉE. WhatsApp us, email us, or send a message — we read every one.",
       },
     ],
   }),
@@ -64,8 +64,9 @@ function ContactPage() {
           <div className="space-y-6">
             <div className="bg-cream p-8 space-y-5">
               <ContactRow icon={Mail} title="Email" value="customercare@melanvee.com" />
-              <ContactRow icon={MessageCircle} title="WhatsApp" value="+44 7000 000 000" />
+              <ContactRow icon={MessageCircle} title="WhatsApp" value="+44 7760 317 678" />
               <ContactRow icon={Instagram} title="Instagram" value="@melanvee" />
+
               <ContactRow icon={Clock} title="Reply time" value="Within 1 hour · Mon–Sat 9–6 GMT" />
             </div>
             <div className="bg-cocoa text-cream p-8 space-y-3">
@@ -76,7 +77,7 @@ function ContactPage() {
                 the house, free of charge.
               </p>
               <a
-                href="https://wa.me/447000000000"
+                href="https://wa.me/447760317678"
                 className="inline-block border-b border-cream pb-1 text-[0.72rem] tracking-[0.25em] uppercase mt-2 hover:text-blush hover:border-blush"
               >
                 Message on WhatsApp

@@ -1,6 +1,7 @@
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { WhatsAppFloat } from "./WhatsAppFloat";
+import { WelcomePopup } from "./WelcomePopup";
 import { CartDrawer } from "@/lib/cart";
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -11,6 +12,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       <Footer />
       <WhatsAppFloat />
       <CartDrawer />
+      <WelcomePopup />
     </div>
   );
 }

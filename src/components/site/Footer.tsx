@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Music2, Youtube } from "lucide-react";
 import { NewsletterSignup } from "./NewsletterSignup";
+import { COLLAB_URL } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -43,8 +44,9 @@ export function Footer() {
             ["Hair Care Guide", "/hair-care"],
             ["FAQ", "/faq"],
             ["Track Order", "/contact"],
-            ["Shipping Policy", "/faq"],
-            ["Returns", "/faq"],
+            ["Shipping Policy", "/policies#shipping"],
+            ["Returns Policy", "/policies#returns"],
+            ["Exchange Policy", "/policies#exchanges"],
           ]}
         />
 
@@ -52,10 +54,10 @@ export function Footer() {
           title="House"
           links={[
             ["About Us", "/about"],
-            ["Collab With Us", "/collab"],
+            ["Collab With Us", COLLAB_URL],
             ["Contact", "/contact"],
-            ["Privacy", "/faq"],
-            ["Terms", "/faq"],
+            ["Privacy Policy", "/policies#privacy"],
+            ["Terms of Service", "/policies#terms"],
           ]}
         />
       </div>
@@ -87,9 +89,20 @@ function FooterCol({ title, links }: { title: string; links: [string, string][] 
       <ul className="space-y-2.5 text-sm text-cream/85">
         {links.map(([label, href]) => (
           <li key={label}>
-            <Link to={href} className="hover:text-blush transition-colors">
-              {label}
-            </Link>
+            {href.startsWith("https://") ? (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blush transition-colors"
+              >
+                {label}
+              </a>
+            ) : (
+              <Link to={href} className="hover:text-blush transition-colors">
+                {label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>

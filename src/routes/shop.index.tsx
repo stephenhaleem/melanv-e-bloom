@@ -123,10 +123,14 @@ function ShopPage() {
         return (
           <section
             key={seg}
+            id={seg
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, "-")
+              .replace(/(^-|-$)/g, "")}
             ref={(el: HTMLElement | null) => {
               sectionRefs.current[seg] = el;
             }}
-            className={isDark ? "bg-cream" : "bg-ivory"}
+            className={`scroll-mt-24 ${isDark ? "bg-cream" : "bg-ivory"}`}
           >
             <div className="container-luxe py-16 md:py-24">
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-14 border-b border-border pb-6">

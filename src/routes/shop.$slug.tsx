@@ -154,6 +154,13 @@ function ProductPage() {
           <p className="text-muted-foreground leading-relaxed max-w-md">
             {product.description || "Discover the MELANVÉE signature collection."}
           </p>
+          <p className="text-sm text-muted-foreground">
+            Looking to customize your order?{" "}
+            <a href="mailto:hello@melanvee.com" className="text-cocoa underline underline-offset-4">
+              Message hello@melanvee.com
+            </a>
+            .
+          </p>
 
           {product.options
             .filter((option) => option.values.length > 1)
