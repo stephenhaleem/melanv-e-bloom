@@ -1,84 +1,136 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Music2, Youtube } from "lucide-react";
+import { Instagram, Music2, ShieldCheck, Youtube } from "lucide-react";
 import { NewsletterSignup } from "./NewsletterSignup";
 import { COLLAB_URL } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="bg-cocoa text-cream mt-32">
-      <div className="container-luxe py-20 grid gap-12 md:grid-cols-5">
-        <div className="md:col-span-2 space-y-5">
-          <div className="font-serif text-3xl tracking-[0.28em]">MELANVÉE</div>
-          <p className="text-cream/70 max-w-sm text-sm leading-relaxed">
-            Effortless beauty, made to feel like yours. Premium textured hair, designed for the
-            women who wear it.
-          </p>
-          <a
-            href="mailto:customercare@melanvee.com"
-            className="block text-sm text-cream/85 hover:text-blush"
-          >
-            customercare@melanvee.com
-          </a>
-          <NewsletterSignup
-            className="flex flex-wrap gap-2 max-w-sm pt-2"
-            inputClassName="flex-1 min-w-0 bg-transparent border-b border-cream/30 py-2 px-1 text-sm placeholder:text-cream/40 focus:outline-none focus:border-cream"
-            buttonClassName="text-[0.7rem] tracking-[0.25em] uppercase border-b border-cream pb-2 hover:text-blush transition disabled:opacity-50"
-            buttonLabel="Join"
+    <>
+      <section
+        aria-label="Accepted payment methods"
+        className="mt-32 border-y border-cocoa/10 bg-cream/60"
+      >
+        <div className="container-luxe flex flex-col items-center gap-6 py-8 text-center md:flex-row md:justify-between md:text-left">
+          <div className="flex items-center gap-3">
+            <ShieldCheck size={22} aria-hidden="true" className="shrink-0 text-cocoa" />
+            <div>
+              <h2 className="text-[0.7rem] font-medium tracking-[0.2em] uppercase text-espresso">
+                Secure payment methods
+              </h2>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Choose your preferred way to pay at checkout.
+              </p>
+            </div>
+          </div>
+          <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-semibold text-cocoa md:justify-end">
+            {[
+              "Apple Pay",
+              "Google Pay",
+              "VISA",
+              "Mastercard",
+              "Amex",
+              "PayPal",
+              "Klarna",
+              "Clearpay",
+            ].map((method) => (
+              <li
+                key={method}
+                className="whitespace-nowrap rounded border border-cocoa/10 bg-white/80 px-2.5 py-1.5 text-xs tracking-tight"
+                aria-label={method}
+              >
+                {method}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      <footer className="bg-cocoa text-cream">
+        <div className="container-luxe py-20 grid gap-12 md:grid-cols-5">
+          <div className="md:col-span-2 space-y-5">
+            <div className="font-serif text-3xl tracking-[0.28em]">MELANVÉE</div>
+            <p className="text-cream/70 max-w-sm text-sm leading-relaxed">
+              Effortless beauty, made to feel like yours. Premium textured hair, designed for the
+              women who wear it.
+            </p>
+            <a
+              href="mailto:customercare@melanvee.com"
+              className="block text-sm text-cream/85 hover:text-blush"
+            >
+              customercare@melanvee.com
+            </a>
+            <NewsletterSignup
+              className="flex flex-wrap gap-2 max-w-sm pt-2"
+              inputClassName="flex-1 min-w-0 bg-transparent border-b border-cream/30 py-2 px-1 text-sm placeholder:text-cream/40 focus:outline-none focus:border-cream"
+              buttonClassName="text-[0.7rem] tracking-[0.25em] uppercase border-b border-cream pb-2 hover:text-blush transition disabled:opacity-50"
+              buttonLabel="Join"
+            />
+          </div>
+
+          <FooterCol
+            title="Shop"
+            links={[
+              ["Back to Work", "/shop"],
+              ["Signature Wigs", "/shop"],
+              ["Summer Edit", "/shop"],
+              ["Crochet", "/shop"],
+              ["Hot Tools", "/shop"],
+            ]}
+          />
+
+          <FooterCol
+            title="Care"
+            links={[
+              ["Hair Care Guide", "/hair-care"],
+              ["FAQ", "/faq"],
+              ["Track Order", "/contact"],
+              ["Shipping Policy", "/policies#shipping"],
+              ["Returns Policy", "/policies#returns"],
+              ["Exchange Policy", "/policies#exchanges"],
+            ]}
+          />
+
+          <FooterCol
+            title="House"
+            links={[
+              ["About Us", "/about"],
+              ["Collab With Us", COLLAB_URL],
+              ["Contact", "/contact"],
+              ["Privacy Policy", "/policies#privacy"],
+              ["Terms of Service", "/policies#terms"],
+            ]}
           />
         </div>
 
-        <FooterCol
-          title="Shop"
-          links={[
-            ["Back to Work", "/shop"],
-            ["Signature Wigs", "/shop"],
-            ["Summer Edit", "/shop"],
-            ["Crochet", "/shop"],
-            ["Hot Tools", "/shop"],
-          ]}
-        />
-
-        <FooterCol
-          title="Care"
-          links={[
-            ["Hair Care Guide", "/hair-care"],
-            ["FAQ", "/faq"],
-            ["Track Order", "/contact"],
-            ["Shipping Policy", "/policies#shipping"],
-            ["Returns Policy", "/policies#returns"],
-            ["Exchange Policy", "/policies#exchanges"],
-          ]}
-        />
-
-        <FooterCol
-          title="House"
-          links={[
-            ["About Us", "/about"],
-            ["Collab With Us", COLLAB_URL],
-            ["Contact", "/contact"],
-            ["Privacy Policy", "/policies#privacy"],
-            ["Terms of Service", "/policies#terms"],
-          ]}
-        />
-      </div>
-
-      <div className="border-t border-cream/15">
-        <div className="container-luxe py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[0.7rem] tracking-[0.2em] uppercase text-cream/60">
-          <div>© {new Date().getFullYear()} Melanvée. All rights reserved.</div>
-          <div className="flex gap-5 text-cream">
-            <a href="#" aria-label="Instagram" className="hover:text-blush">
-              <Instagram size={16} />
-            </a>
-            <a href="#" aria-label="TikTok" className="hover:text-blush">
-              <Music2 size={16} />
-            </a>
-            <a href="#" aria-label="YouTube" className="hover:text-blush">
-              <Youtube size={16} />
-            </a>
+        <div className="border-t border-cream/15">
+          <div className="container-luxe py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[0.7rem] tracking-[0.2em] uppercase text-cream/60">
+            <div>© {new Date().getFullYear()} Melanvée. All rights reserved.</div>
+            <div className="flex gap-5 text-cream">
+              <a
+                href="https://instagram.com/melanveeofficial"
+                aria-label="Instagram"
+                className="hover:text-blush"
+              >
+                <Instagram size={16} />
+              </a>
+              <a
+                href="https://tiktok.com/@melanvee"
+                aria-label="TikTok"
+                className="hover:text-blush"
+              >
+                <Music2 size={16} />
+              </a>
+              <a
+                href="https://youtube.com/@melanvee"
+                aria-label="YouTube"
+                className="hover:text-blush"
+              >
+                <Youtube size={16} />
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }
 

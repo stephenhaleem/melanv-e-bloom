@@ -505,10 +505,16 @@ function Community() {
           Tag us on Instagram & TikTok for a chance to be featured.
         </p>
         <div className="flex gap-4 justify-center pt-2 text-[0.7rem] tracking-[0.25em] uppercase">
-          <a href="#" className="border-b border-cocoa pb-1 text-cocoa hover:text-espresso">
+          <a
+            href="https://instagram.com/melanveeofficial"
+            className="border-b border-cocoa pb-1 text-cocoa hover:text-espresso"
+          >
             Instagram
           </a>
-          <a href="#" className="border-b border-cocoa pb-1 text-cocoa hover:text-espresso">
+          <a
+            href="https://tiktok.com/@melanvee"
+            className="border-b border-cocoa pb-1 text-cocoa hover:text-espresso"
+          >
             TikTok
           </a>
         </div>
