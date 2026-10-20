@@ -18,18 +18,16 @@ export const Route = createFileRoute("/policies")({
 function PoliciesPage() {
   return (
     <SiteLayout>
-      <section className="container-luxe py-20 md:py-28">
-        <div className="max-w-2xl mx-auto text-center space-y-5 mb-16">
+      <section className="container-luxe py-16 md:py-24">
+        <div className="mx-auto mb-12 max-w-4xl space-y-4 border-b border-cocoa/20 pb-10 md:mb-16 md:pb-12">
           <div className="eyebrow">The details</div>
-          <h1 className="font-serif text-5xl md:text-6xl text-espresso text-balance">
-            Our policies.
-          </h1>
-          <p className="text-muted-foreground">
+          <h1 className="font-serif text-4xl text-espresso text-balance md:text-5xl">Policies</h1>
+          <p className="max-w-2xl text-muted-foreground">
             Everything you need to know about ordering with MELANVÉE.
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-14">
+        <div className="mx-auto max-w-4xl space-y-12 md:space-y-14">
           <PolicySection id="shipping" title="Shipping Policy">
             <p>All MELANVÉE orders are dispatched promptly upon processing.</p>
             <ul className="list-disc pl-5 space-y-2">
@@ -145,11 +143,8 @@ function PolicySection({
   children: React.ReactNode;
 }) {
   return (
-    <section
-      id={id}
-      className="scroll-mt-24 space-y-4 text-sm leading-relaxed text-muted-foreground"
-    >
-      <h2 className="font-serif text-2xl text-espresso pb-3 border-b border-cocoa/20">{title}</h2>
+    <section id={id} className="scroll-mt-24 space-y-4 text-sm leading-7 text-muted-foreground">
+      <h2 className="border-b border-cocoa/20 pb-3 font-serif text-2xl text-espresso">{title}</h2>
       {children}
     </section>
   );
