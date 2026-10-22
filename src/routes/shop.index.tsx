@@ -3,11 +3,17 @@ import { SiteLayout } from "@/components/site/Layout";
 import { Heart, ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { Price } from "@/lib/currency";
-import { getProductImage, getProducts, getStartingPrice, type ShopifyProduct } from "@/lib/shopify";
-import { SEGMENTS, SEGMENT_COPY, type Segment } from "@/lib/products";
+import {
+  getCollectionsWithProducts,
+  getProductImage,
+  getStartingPrice,
+  type ShopifyCollectionWithProducts,
+  type ShopifyProduct,
+} from "@/lib/shopify";
+import { useSiteContent } from "@/lib/site-content";
 
 export const Route = createFileRoute("/shop/")({
-  loader: () => getProducts(50),
+  loader: () => getCollectionsWithProducts(),
   head: () => ({
     meta: [
       { title: "Shop — MELANVÉE" },
@@ -26,17 +32,18 @@ export const Route = createFileRoute("/shop/")({
 });
 
 function ShopPage() {
-  const products: ShopifyProduct[] = Route.useLoaderData();
-  const sectionRefs = useRef<Record<Segment, HTMLElement | null>>({
-    "U/V Part Wigs": null,
-    "Half Wig": null,
-    Crochet: null,
-    "Layered Wigs": null,
-    "Hot Tools": null,
-  });
+  const { text } = useSiteContent();
+  const loadedCollections: ShopifyCollectionWithProducts[] = Route.useLoaderData();
+  const collections = loadedCollections.filter((collection) => collection.products.length > 0);
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+  const products = Array.from(
+    new Map(
+      collections.flatMap((collection) => collection.products).map((p) => [p.id, p]),
+    ).values(),
+  );
 
-  const scrollTo = (seg: Segment) => {
-    sectionRefs.current[seg]?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const scrollTo = (handle: string) => {
+    sectionRefs.current[handle]?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const spotlight = products.slice(0, 3);
@@ -46,24 +53,27 @@ function ShopPage() {
       {/* Heading */}
       <section className="bg-cream py-16 md:py-20">
         <div className="container-luxe text-center max-w-2xl mx-auto space-y-4">
-          <div className="eyebrow">The Collection</div>
+          <div className="eyebrow">{text("shop.eyebrow", "The Collection")}</div>
           <h1 className="font-serif text-5xl md:text-6xl text-espresso text-balance">
-            The house, in full.
+            {text("shop.title", "The house, in full.")}
           </h1>
           <p className="text-muted-foreground">
-            Hand-finished, small batch, worn by women who don't repeat themselves.
+            {text(
+              "shop.description",
+              "Hand-finished, small batch, worn by women who don't repeat themselves.",
+            )}
           </p>
         </div>
 
         {/* Segment quick-jump */}
         <div className="container-luxe mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-[0.7rem] tracking-[0.25em] uppercase">
-          {SEGMENTS.map((seg) => (
+          {collections.map((collection) => (
             <button
-              key={seg}
-              onClick={() => scrollTo(seg)}
+              key={collection.id}
+              onClick={() => scrollTo(collection.handle)}
               className="text-cocoa hover:text-espresso border-b border-transparent hover:border-cocoa pb-1 transition"
             >
-              {seg}
+              {collection.title}
             </button>
           ))}
         </div>
@@ -73,13 +83,17 @@ function ShopPage() {
       <section className="bg-cocoa text-cream">
         <div className="container-luxe py-16 md:py-24 grid md:grid-cols-12 gap-10 items-center">
           <div className="md:col-span-5 space-y-6">
-            <div className="eyebrow text-blush">Autumn Drop · No.05</div>
+            <div className="eyebrow text-blush">
+              {text("shop.spotlight.eyebrow", "Autumn Drop · No.05")}
+            </div>
             <h2 className="font-serif text-4xl md:text-5xl text-balance leading-[1.05]">
-              The Back to Work Edit.
+              {text("home.shop-spotlight.title", "The Back to Work Edit.")}
             </h2>
             <p className="text-cream/75 max-w-md">
-              Sleek, structured, quietly powerful. Three new textures built for boardrooms, school
-              runs and the in-between.
+              {text(
+                "home.shop-spotlight.description",
+                "Sleek, structured, quietly powerful. Three new textures built for boardrooms, school runs and the in-between.",
+              )}
             </p>
             <div className="flex flex-col gap-2 text-sm">
               {spotlight.map((p) => (
@@ -115,20 +129,16 @@ function ShopPage() {
       </section>
 
       {/* SEGMENTS */}
-      {SEGMENTS.map((seg, idx) => {
-        const items = products.filter((p) => getSegment(p) === seg);
+      {collections.map((collection, idx) => {
+        const items = collection.products;
         if (items.length === 0) return null;
-        const copy = SEGMENT_COPY[seg];
         const isDark = idx % 2 === 1;
         return (
           <section
-            key={seg}
-            id={seg
-              .toLowerCase()
-              .replace(/[^a-z0-9]+/g, "-")
-              .replace(/(^-|-$)/g, "")}
+            key={collection.id}
+            id={collection.handle}
             ref={(el: HTMLElement | null) => {
-              sectionRefs.current[seg] = el;
+              sectionRefs.current[collection.handle] = el;
             }}
             className={`scroll-mt-24 ${isDark ? "bg-cream" : "bg-ivory"}`}
           >
@@ -139,13 +149,14 @@ function ShopPage() {
                     No.0{idx + 1} · {items.length} {items.length === 1 ? "piece" : "pieces"}
                   </div>
                   <h2 className="font-serif text-4xl md:text-5xl text-espresso leading-[1.05]">
-                    {seg}.
+                    {collection.title}.
                   </h2>
-                  <p className="text-muted-foreground text-sm md:text-base">{copy.description}</p>
+                  {collection.description && (
+                    <p className="text-muted-foreground text-sm md:text-base">
+                      {collection.description}
+                    </p>
+                  )}
                 </div>
-                <span className="text-[0.7rem] tracking-[0.22em] uppercase text-cocoa italic font-serif">
-                  — {copy.tagline}
-                </span>
               </div>
 
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
@@ -161,8 +172,12 @@ function ShopPage() {
       <section className="bg-cocoa text-cream py-14">
         <div className="container-luxe flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
           <div>
-            <div className="eyebrow text-blush">Not sure?</div>
-            <p className="font-serif text-2xl mt-2">A texture match, on us.</p>
+            <div className="eyebrow text-blush">
+              {text("shop.consultation.eyebrow", "Not sure?")}
+            </div>
+            <p className="font-serif text-2xl mt-2">
+              {text("shop.consultation.title", "A texture match, on us.")}
+            </p>
           </div>
           <Link
             to="/contact"
@@ -174,16 +189,6 @@ function ShopPage() {
       </section>
     </SiteLayout>
   );
-}
-
-function getSegment(product: ShopifyProduct): Segment {
-  const description =
-    `${product.title} ${product.productType} ${product.tags.join(" ")}`.toLowerCase();
-  if (description.includes("crochet")) return "Crochet";
-  if (description.includes("tool")) return "Hot Tools";
-  if (description.includes("half wig")) return "Half Wig";
-  if (description.includes("layer") || description.includes("bob")) return "Layered Wigs";
-  return "U/V Part Wigs";
 }
 
 function ProductCard({ product: p }: { product: ShopifyProduct }) {

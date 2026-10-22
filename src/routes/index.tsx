@@ -3,7 +3,13 @@ import { SiteLayout } from "@/components/site/Layout";
 import { NewsletterSignup } from "@/components/site/NewsletterSignup";
 import { Price } from "@/lib/currency";
 import { useCart } from "@/lib/cart";
-import { getProductImage, getProducts, getStartingPrice, type ShopifyProduct } from "@/lib/shopify";
+import {
+  getCollections,
+  getProductImage,
+  getProducts,
+  getStartingPrice,
+  type ShopifyProduct,
+} from "@/lib/shopify";
 import {
   Sparkles,
   Feather,
@@ -17,19 +23,19 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { useState } from "react";
-import hero from "@/assets/hero-melanvee.jpg";
+import hero from "@/assets/3AAB18E63E27A2827D03-IMG_7567.png";
 import textureCloseup from "@/assets/texture-closeup.jpg";
-import colTextured from "@/assets/collection-textured.jpg";
-import colUpart from "@/assets/collection-upart.jpg";
-import colPonytail from "@/assets/collection-ponytail.jpg";
-import colBundles from "@/assets/collection-bundles.jpg";
 import ugc1 from "@/assets/ugc-1.jpg";
 import ugc2 from "@/assets/ugc-2.jpg";
 import ugc3 from "@/assets/ugc-3.jpg";
 import ugc4 from "@/assets/ugc-4.jpg";
+import { useSiteContent } from "@/lib/site-content";
 
 export const Route = createFileRoute("/")({
-  loader: () => getProducts(4),
+  loader: async () => {
+    const [products, collections] = await Promise.all([getProducts(4), getCollections()]);
+    return { products, collections };
+  },
   head: () => ({
     meta: [
       { title: "MELANVÉE — Made to feel like yours" },
@@ -52,14 +58,16 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const products: ShopifyProduct[] = Route.useLoaderData();
+  const { products, collections } = Route.useLoaderData();
 
   return (
     <SiteLayout>
-      <Hero featured={products[0]} />
+      <Hero
+        featured={products.find((product) => product.title.toLowerCase().includes("kimi curl"))}
+      />
       <Marquee />
       <ValueProps />
-      <Collections />
+      <Collections collections={collections} />
       <Bestsellers products={products} />
       <WhyMelanvee />
       <BeforeAfter />
@@ -74,6 +82,7 @@ function HomePage() {
 
 /* -------------------- HERO -------------------- */
 function Hero({ featured }: { featured?: ShopifyProduct }) {
+  const { text, image } = useSiteContent();
   return (
     <section className="bg-ivory">
       {/* Mobile-first editorial composition */}
@@ -81,9 +90,9 @@ function Hero({ featured }: { featured?: ShopifyProduct }) {
         <div className="relative">
           <div className="aspect-[4/5] md:aspect-[16/10] w-full overflow-hidden bg-sand">
             <img
-              src={hero}
+              src={image("image.home.hero", hero)}
               alt="A woman wearing a Melanvée textured wig, photographed in rich burgundy light"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain md:object-cover"
               width={1600}
               height={1280}
               fetchPriority="high"
@@ -133,17 +142,17 @@ function Hero({ featured }: { featured?: ShopifyProduct }) {
           <div className="flex items-center gap-3 mb-8">
             <span className="h-px w-6 bg-border" />
             <span className="text-[0.65rem] tracking-[0.32em] uppercase text-muted-foreground font-medium">
-              The Burgundy Collection · No.04
+              {text("home.hero.eyebrow", "The Burgundy Collection · No.04")}
             </span>
           </div>
           <h1 className="font-serif text-5xl md:text-7xl leading-[1.05] font-light text-espresso text-balance mb-8">
-            Made to <span className="italic">feel</span>
-            <br />
-            like yours.
+            {text("home.hero.title", "Made to feel like yours.")}
           </h1>
           <p className="text-muted-foreground text-[0.95rem] md:text-base leading-[1.9] font-light max-w-md mb-10">
-            Textured wigs and protective styles, crafted with quiet luxury in mind — designed for
-            the woman who values her time as much as her aesthetic.
+            {text(
+              "home.hero.description",
+              "Textured wigs and protective styles, crafted with quiet luxury in mind — designed for the woman who values her time as much as her aesthetic.",
+            )}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 max-w-md">
             <Link
@@ -193,25 +202,38 @@ function Marquee() {
 
 /* -------------------- VALUE PROPS -------------------- */
 function ValueProps() {
+  const { text } = useSiteContent();
   const props = [
     {
       icon: Sparkles,
-      t: "Natural-looking blends",
-      d: "HD lace and melted hairlines, made to disappear.",
+      t: text("home.value.1.title", "Natural-looking blends"),
+      d: text("home.value.1.description", "HD lace and melted hairlines, made to disappear."),
     },
-    { icon: Feather, t: "Lightweight comfort", d: "Built airy. Built to wear all day, every day." },
+    {
+      icon: Feather,
+      t: text("home.value.2.title", "Lightweight comfort"),
+      d: text("home.value.2.description", "Built airy. Built to wear all day, every day."),
+    },
     {
       icon: HandHeart,
-      t: "Beginner friendly",
-      d: "Pre-styled, pre-plucked, ready out of the box.",
+      t: text("home.value.3.title", "Beginner friendly"),
+      d: text("home.value.3.description", "Pre-styled, pre-plucked, ready out of the box."),
     },
     {
       icon: Shield,
-      t: "Protective styling",
-      d: "Looks like your own hair while you grow your own.",
+      t: text("home.value.4.title", "Protective styling"),
+      d: text("home.value.4.description", "Looks like your own hair while you grow your own."),
     },
-    { icon: Wand2, t: "Effortless installs", d: "Glueless. Adjustable. On in under 5 minutes." },
-    { icon: Gem, t: "Premium quality", d: "Sourced, wefted and styled in small batches." },
+    {
+      icon: Wand2,
+      t: text("home.value.5.title", "Effortless installs"),
+      d: text("home.value.5.description", "Glueless. Adjustable. On in under 5 minutes."),
+    },
+    {
+      icon: Gem,
+      t: text("home.value.6.title", "Premium quality"),
+      d: text("home.value.6.description", "Sourced, wefted and styled in small batches."),
+    },
   ];
   return (
     <section className="container-luxe py-24 md:py-32">
@@ -229,21 +251,16 @@ function ValueProps() {
 }
 
 /* -------------------- COLLECTIONS -------------------- */
-function Collections() {
-  const cats = [
-    { img: colTextured, name: "Back to Work", count: "Autumn · 3 pieces" },
-    { img: colUpart, name: "Signature Wigs", count: "3 pieces" },
-    { img: colBundles, name: "Summer Edit", count: "3 pieces" },
-    { img: colPonytail, name: "Crochet & Hot Tools", count: "6 pieces" },
-  ];
+function Collections({ collections }: { collections: Awaited<ReturnType<typeof getCollections>> }) {
+  const { text, image } = useSiteContent();
   return (
     <section className="bg-cream py-24 md:py-32">
       <div className="container-luxe">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
           <div>
-            <div className="eyebrow mb-3">Edits</div>
+            <div className="eyebrow mb-3">{text("home.collections.eyebrow", "Edits")}</div>
             <h2 className="font-serif text-4xl md:text-5xl text-espresso max-w-xl text-balance">
-              A wardrobe of textures. Yours to live in.
+              {text("home.collections.title", "A wardrobe of textures. Yours to live in.")}
             </h2>
           </div>
           <Link
@@ -255,12 +272,12 @@ function Collections() {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-          {cats.map((c) => (
-            <Link to="/shop" key={c.name} className="group block">
+          {collections.map((collection) => (
+            <Link to="/shop" key={collection.id} className="group block">
               <div className="aspect-[4/5] overflow-hidden bg-sand">
                 <img
-                  src={c.img}
-                  alt={c.name}
+                  src={collection.image?.url ?? image("image.home.texture", textureCloseup)}
+                  alt={collection.image?.altText ?? collection.title}
                   loading="lazy"
                   width={1000}
                   height={1300}
@@ -269,8 +286,9 @@ function Collections() {
               </div>
               <div className="pt-4 flex items-end justify-between">
                 <div>
-                  <h3 className="font-serif text-lg md:text-xl text-espresso">{c.name}</h3>
-                  <div className="text-xs text-muted-foreground mt-0.5">{c.count}</div>
+                  <h3 className="font-serif text-lg md:text-xl text-espresso">
+                    {collection.title}
+                  </h3>
                 </div>
                 <Plus
                   size={16}
@@ -287,6 +305,7 @@ function Collections() {
 
 /* -------------------- BESTSELLERS -------------------- */
 function Bestsellers({ products }: { products: ShopifyProduct[] }) {
+  const { text } = useSiteContent();
   const { add } = useCart();
   const [addingId, setAddingId] = useState<string | null>(null);
   const [addedId, setAddedId] = useState<string | null>(null);
@@ -313,9 +332,9 @@ function Bestsellers({ products }: { products: ShopifyProduct[] }) {
     <section className="container-luxe py-24 md:py-32">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
         <div>
-          <div className="eyebrow mb-3">Bestsellers</div>
+          <div className="eyebrow mb-3">{text("home.bestsellers.eyebrow", "Bestsellers")}</div>
           <h2 className="font-serif text-4xl md:text-5xl text-espresso max-w-xl text-balance">
-            Quietly loved. Constantly re-ordered.
+            {text("home.bestsellers.title", "Quietly loved. Constantly re-ordered.")}
           </h2>
         </div>
         <Link
@@ -410,12 +429,13 @@ function ProductCard({
 
 /* -------------------- WHY MELANVÉE -------------------- */
 function WhyMelanvee() {
+  const { text, image } = useSiteContent();
   return (
     <section className="bg-cocoa text-cream py-24 md:py-36 relative overflow-hidden">
       <div className="container-luxe grid lg:grid-cols-2 gap-16 items-center">
         <div className="relative aspect-[4/5] overflow-hidden">
           <img
-            src={textureCloseup}
+            src={image("image.home.texture", textureCloseup)}
             alt="Close-up of natural curls"
             loading="lazy"
             width={1200}
@@ -424,16 +444,15 @@ function WhyMelanvee() {
           />
         </div>
         <div className="space-y-8">
-          <div className="eyebrow text-blush">Why Melanvée</div>
+          <div className="eyebrow text-blush">{text("home.why.eyebrow", "Why Melanvée")}</div>
           <h2 className="font-serif text-4xl md:text-6xl leading-[1.05] text-balance">
-            Hair that feels
-            <br />
-            <em className="not-italic text-blush">like you</em> wrote it.
+            {text("home.why.title", "Hair that feels like you wrote it.")}
           </h2>
           <p className="text-cream/80 text-lg leading-relaxed max-w-lg">
-            We make textured hair for the woman who's done compromising. The kind of softness that
-            doesn't announce itself. The kind of realism your sister second-guesses. The kind of
-            confidence that lives in your shoulders before it ever reaches your face.
+            {text(
+              "home.why.description",
+              "We make textured hair for the woman who's done compromising. The kind of softness that doesn't announce itself. The kind of realism your sister second-guesses. The kind of confidence that lives in your shoulders before it ever reaches your face.",
+            )}
           </p>
           <ul className="space-y-3 text-cream/85">
             {[
@@ -460,19 +479,28 @@ function WhyMelanvee() {
 
 /* -------------------- BEFORE & AFTER -------------------- */
 function BeforeAfter() {
+  const { text, image } = useSiteContent();
   return (
     <section className="container-luxe py-24 md:py-32">
       <div className="text-center max-w-2xl mx-auto mb-14 space-y-4">
-        <div className="eyebrow">Real installs</div>
+        <div className="eyebrow">{text("home.before-after.eyebrow", "Real installs")}</div>
         <h2 className="font-serif text-4xl md:text-5xl text-espresso text-balance">
-          Worn by her. Filmed in her bathroom.
+          {text("home.before-after.title", "Worn by her. Filmed in her bathroom.")}
         </h2>
         <p className="text-muted-foreground">
-          Customer transformations — unedited, unfiltered, on real schedules.
+          {text(
+            "home.before-after.description",
+            "Customer transformations — unedited, unfiltered, on real schedules.",
+          )}
         </p>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
-        {[ugc1, ugc2, ugc3, ugc4].map((src, i) => (
+        {[
+          image("image.home.customer.1", ugc1),
+          image("image.home.customer.2", ugc2),
+          image("image.home.customer.3", ugc3),
+          image("image.home.customer.4", ugc4),
+        ].map((src, i) => (
           <div key={i} className="relative aspect-[3/4] overflow-hidden bg-sand group">
             <img
               src={src}
@@ -494,15 +522,19 @@ function BeforeAfter() {
 
 /* -------------------- COMMUNITY -------------------- */
 function Community() {
+  const { text, image } = useSiteContent();
   return (
     <section className="bg-cream py-24 md:py-32">
       <div className="container-luxe text-center max-w-2xl mx-auto space-y-5">
-        <div className="eyebrow">#MelanveeMuse</div>
+        <div className="eyebrow">{text("home.community.eyebrow", "#MelanveeMuse")}</div>
         <h2 className="font-serif text-4xl md:text-5xl text-espresso text-balance">
-          Styled by the Melanvée community.
+          {text("home.community.title", "Styled by the Melanvée community.")}
         </h2>
         <p className="text-muted-foreground">
-          Tag us on Instagram & TikTok for a chance to be featured.
+          {text(
+            "home.community.description",
+            "Tag us on Instagram & TikTok for a chance to be featured.",
+          )}
         </p>
         <div className="flex gap-4 justify-center pt-2 text-[0.7rem] tracking-[0.25em] uppercase">
           <a
@@ -520,7 +552,14 @@ function Community() {
         </div>
       </div>
       <div className="mt-14 grid grid-cols-2 md:grid-cols-6 gap-2">
-        {[ugc2, ugc3, ugc1, ugc4, ugc3, ugc2].map((src, i) => (
+        {[
+          image("image.home.customer.2", ugc2),
+          image("image.home.customer.3", ugc3),
+          image("image.home.customer.1", ugc1),
+          image("image.home.customer.4", ugc4),
+          image("image.home.customer.3", ugc3),
+          image("image.home.customer.2", ugc2),
+        ].map((src, i) => (
           <div key={i} className="aspect-square overflow-hidden">
             <img
               src={src}
@@ -537,22 +576,31 @@ function Community() {
 
 /* -------------------- TESTIMONIALS -------------------- */
 function Testimonials() {
+  const { text } = useSiteContent();
   const reviews = [
     {
-      quote:
+      quote: text(
+        "home.testimonial.1.quote",
         "I've worn it for three weeks straight and forgot it wasn't mine. The hairline blends into my actual skin.",
-      name: "Amara O.",
-      style: 'Cocoa Curl 22"',
+      ),
+      name: text("home.testimonial.1.name", "Amara O."),
+      style: text("home.testimonial.1.style", 'Cocoa Curl 22"'),
     },
     {
-      quote: "Genuinely the softest unit I've ever owned. I cried a little. No notes.",
-      name: "Joelle K.",
-      style: "Honey Body Wave",
+      quote: text(
+        "home.testimonial.2.quote",
+        "Genuinely the softest unit I've ever owned. I cried a little. No notes.",
+      ),
+      name: text("home.testimonial.2.name", "Joelle K."),
+      style: text("home.testimonial.2.style", "Honey Body Wave"),
     },
     {
-      quote: "Installed it in 4 minutes before a meeting. People kept asking what I changed.",
-      name: "Bisi A.",
-      style: "Ivory Straight U-part",
+      quote: text(
+        "home.testimonial.3.quote",
+        "Installed it in 4 minutes before a meeting. People kept asking what I changed.",
+      ),
+      name: text("home.testimonial.3.name", "Bisi A."),
+      style: text("home.testimonial.3.style", "Ivory Straight U-part"),
     },
   ];
   return (
@@ -580,27 +628,50 @@ function Testimonials() {
 
 /* -------------------- HOW IT WORKS -------------------- */
 function HowItWorks() {
+  const { text } = useSiteContent();
   const steps = [
     [
       "01",
-      "Choose your texture",
-      "Match her natural pattern or try something new — coily, curly, wavy, sleek.",
+      text("home.how-it-works.step1.title", "Choose your texture"),
+      text(
+        "home.how-it-works.step1.description",
+        "Match her natural pattern or try something new — coily, curly, wavy, sleek.",
+      ),
     ],
     [
       "02",
-      "Install effortlessly",
-      "Glueless, adjustable, pre-styled. Ready in under five minutes.",
+      text("home.how-it-works.step2.title", "Install effortlessly"),
+      text(
+        "home.how-it-works.step2.description",
+        "Glueless, adjustable, pre-styled. Ready in under five minutes.",
+      ),
     ],
-    ["03", "Blend naturally", "Melted HD lace and a feather edge that disappears into the skin."],
-    ["04", "Go.", "Wear her to work, the gym, the wedding, the weekend. Repeat."],
+    [
+      "03",
+      text("home.how-it-works.step3.title", "Blend naturally"),
+      text(
+        "home.how-it-works.step3.description",
+        "Melted HD lace and a feather edge that disappears into the skin.",
+      ),
+    ],
+    [
+      "04",
+      text("home.how-it-works.step4.title", "Go."),
+      text(
+        "home.how-it-works.step4.description",
+        "Wear her to work, the gym, the wedding, the weekend. Repeat.",
+      ),
+    ],
   ];
   return (
     <section className="bg-espresso text-cream py-24 md:py-32">
       <div className="container-luxe">
         <div className="text-center mb-16 space-y-4">
-          <div className="eyebrow text-blush">How it works</div>
+          <div className="eyebrow text-blush">
+            {text("home.how-it-works.eyebrow", "How it works")}
+          </div>
           <h2 className="font-serif text-4xl md:text-5xl text-balance">
-            Four quiet steps. One you.
+            {text("home.how-it-works.title", "Four quiet steps. One you.")}
           </h2>
         </div>
         <div className="grid md:grid-cols-4 gap-10 md:gap-6">
@@ -621,41 +692,25 @@ function HowItWorks() {
 }
 
 /* -------------------- FAQ -------------------- */
-const faqs = [
-  [
-    "How long does shipping take?",
-    "UK orders arrive in 2–4 business days. International in 5–10. Express options at checkout.",
-  ],
-  [
-    "Are the wigs beginner-friendly?",
-    "Yes — every wig ships pre-plucked, pre-styled and glueless. Most customers install in under 5 minutes.",
-  ],
-  [
-    "How do I care for my hair?",
-    "Co-wash every 2 weeks, air dry, and store on a satin-lined stand. See our full Hair Care Guide.",
-  ],
-  ["Do you ship internationally?", "We ship to 42+ countries with tracked, duty-clear delivery."],
-  [
-    "Do you offer payment plans?",
-    "Klarna and Clearpay are available at checkout in supported regions.",
-  ],
-  [
-    "What if my texture doesn't match?",
-    "We offer free texture matching with our concierge — message us on WhatsApp.",
-  ],
-];
-
 function FAQSection() {
+  const { text } = useSiteContent();
+  const faqs = Array.from({ length: 6 }, (_, index) => {
+    const number = index + 1;
+    return [text(`home.faq.q${number}`, ""), text(`home.faq.a${number}`, "")] as [string, string];
+  }).filter(([question]) => question);
   return (
     <section className="container-luxe py-24 md:py-32">
       <div className="grid md:grid-cols-3 gap-12">
         <div className="space-y-4">
-          <div className="eyebrow">Answered</div>
+          <div className="eyebrow">{text("home.faq.eyebrow", "Answered")}</div>
           <h2 className="font-serif text-4xl md:text-5xl text-espresso text-balance">
-            The things she always asks.
+            {text("home.faq.title", "The things she always asks.")}
           </h2>
           <p className="text-muted-foreground text-sm">
-            Can't find what you need? Reach our concierge — we usually reply within an hour.
+            {text(
+              "home.faq.description",
+              "Can't find what you need? Reach our concierge — we usually reply within an hour.",
+            )}
           </p>
           <Link
             to="/contact"
@@ -699,15 +754,19 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 /* -------------------- NEWSLETTER -------------------- */
 function Newsletter() {
+  const { text } = useSiteContent();
   return (
     <section className="bg-blush/40 py-24 md:py-32">
       <div className="container-luxe text-center max-w-2xl mx-auto space-y-6">
         <div className="eyebrow">The List</div>
         <h2 className="font-serif text-4xl md:text-5xl text-espresso text-balance">
-          Join the Melanvée community.
+          {text("home.newsletter.title", "Join the Melanvée community.")}
         </h2>
         <p className="text-muted-foreground">
-          Restock alerts, early access to drops, and a £15 welcome credit on your first order.
+          {text(
+            "home.newsletter.description",
+            "Restock alerts, early access to drops, and a £15 welcome credit on your first order.",
+          )}
         </p>
         <NewsletterSignup
           className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2"

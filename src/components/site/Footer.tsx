@@ -2,8 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { Instagram, Music2, ShieldCheck, Youtube } from "lucide-react";
 import { NewsletterSignup } from "./NewsletterSignup";
 import { COLLAB_URL } from "@/lib/site";
+import { useSiteContent } from "@/lib/site-content";
 
 export function Footer() {
+  const { text } = useSiteContent();
   return (
     <>
       <section
@@ -15,10 +17,13 @@ export function Footer() {
             <ShieldCheck size={22} aria-hidden="true" className="shrink-0 text-cocoa" />
             <div>
               <h2 className="text-[0.7rem] font-medium tracking-[0.2em] uppercase text-espresso">
-                Secure payment methods
+                {text("footer.payment.title", "Secure payment methods")}
               </h2>
               <p className="mt-1 text-xs text-muted-foreground">
-                Choose your preferred way to pay at checkout.
+                {text(
+                  "footer.payment.description",
+                  "Choose your preferred way to pay at checkout.",
+                )}
               </p>
             </div>
           </div>
@@ -49,8 +54,10 @@ export function Footer() {
           <div className="md:col-span-2 space-y-5">
             <div className="font-serif text-3xl tracking-[0.28em]">MELANVÉE</div>
             <p className="text-cream/70 max-w-sm text-sm leading-relaxed">
-              Effortless beauty, made to feel like yours. Premium textured hair, designed for the
-              women who wear it.
+              {text(
+                "footer.description",
+                "Effortless beauty, made to feel like yours. Premium textured hair, designed for the women who wear it.",
+              )}
             </p>
             <a
               href="mailto:customercare@melanvee.com"
@@ -62,12 +69,19 @@ export function Footer() {
               className="flex flex-wrap gap-2 max-w-sm pt-2"
               inputClassName="flex-1 min-w-0 bg-transparent border-b border-cream/30 py-2 px-1 text-sm placeholder:text-cream/40 focus:outline-none focus:border-cream"
               buttonClassName="text-[0.7rem] tracking-[0.25em] uppercase border-b border-cream pb-2 hover:text-blush transition disabled:opacity-50"
-              buttonLabel="Join"
+              buttonLabel={text("footer.newsletter.button", "Join")}
             />
           </div>
 
           <FooterCol
-            title="Shop"
+            title={text("footer.shop.title", "Shop")}
+            labels={[
+              "footer.shop.1",
+              "footer.shop.2",
+              "footer.shop.3",
+              "footer.shop.4",
+              "footer.shop.5",
+            ]}
             links={[
               ["Back to Work", "/shop"],
               ["Signature Wigs", "/shop"],
@@ -78,7 +92,15 @@ export function Footer() {
           />
 
           <FooterCol
-            title="Care"
+            title={text("footer.care.title", "Care")}
+            labels={[
+              "footer.care.1",
+              "footer.care.2",
+              "footer.care.3",
+              "footer.care.4",
+              "footer.care.5",
+              "footer.care.6",
+            ]}
             links={[
               ["Hair Care Guide", "/hair-care"],
               ["FAQ", "/faq"],
@@ -90,7 +112,14 @@ export function Footer() {
           />
 
           <FooterCol
-            title="House"
+            title={text("footer.house.title", "House")}
+            labels={[
+              "footer.house.1",
+              "footer.house.2",
+              "footer.house.3",
+              "footer.house.4",
+              "footer.house.5",
+            ]}
             links={[
               ["About Us", "/about"],
               ["Collab With Us", COLLAB_URL],
@@ -103,7 +132,10 @@ export function Footer() {
 
         <div className="border-t border-cream/15">
           <div className="container-luxe py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[0.7rem] tracking-[0.2em] uppercase text-cream/60">
-            <div>© {new Date().getFullYear()} Melanvée. All rights reserved.</div>
+            <div>
+              © {new Date().getFullYear()}{" "}
+              {text("footer.copyright", "Melanvée. All rights reserved.")}
+            </div>
             <div className="flex gap-5 text-cream">
               <a
                 href="https://instagram.com/melanveeofficial"
@@ -134,29 +166,41 @@ export function Footer() {
   );
 }
 
-function FooterCol({ title, links }: { title: string; links: [string, string][] }) {
+function FooterCol({
+  title,
+  links,
+  labels,
+}: {
+  title: string;
+  links: [string, string][];
+  labels: string[];
+}) {
+  const { text } = useSiteContent();
   return (
     <div className="space-y-4">
       <h4 className="text-[0.7rem] tracking-[0.28em] uppercase text-cream/60 font-sans">{title}</h4>
       <ul className="space-y-2.5 text-sm text-cream/85">
-        {links.map(([label, href]) => (
-          <li key={label}>
-            {href.startsWith("https://") ? (
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-blush transition-colors"
-              >
-                {label}
-              </a>
-            ) : (
-              <Link to={href} className="hover:text-blush transition-colors">
-                {label}
-              </Link>
-            )}
-          </li>
-        ))}
+        {links.map(([label, href], index) => {
+          const visibleLabel = text(labels[index] ?? "", label);
+          return (
+            <li key={label}>
+              {href.startsWith("https://") ? (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-blush transition-colors"
+                >
+                  {visibleLabel}
+                </a>
+              ) : (
+                <Link to={href} className="hover:text-blush transition-colors">
+                  {visibleLabel}
+                </Link>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

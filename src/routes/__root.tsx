@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { CurrencyProvider } from "@/lib/currency";
 import { CartProvider } from "@/lib/cart";
+import { SiteContentProvider } from "@/lib/site-content";
 
 import appCss from "../styles.css?url";
 
@@ -34,7 +35,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
   console.error(error);
   const router = useRouter();
 
@@ -75,7 +76,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "MELANVÉE — Made to feel like yours" },
-      { name: "description", content: "Premium textured wigs, protective styles and effortless beauty. Realism. Softness. Confidence." },
+      {
+        name: "description",
+        content:
+          "Premium textured wigs, protective styles and effortless beauty. Realism. Softness. Confidence.",
+      },
       { name: "author", content: "Melanvée" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@melanvee" },
@@ -84,7 +89,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -113,9 +121,11 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <CurrencyProvider>
-        <CartProvider>
-          <Outlet />
-        </CartProvider>
+        <SiteContentProvider>
+          <CartProvider>
+            <Outlet />
+          </CartProvider>
+        </SiteContentProvider>
       </CurrencyProvider>
     </QueryClientProvider>
   );

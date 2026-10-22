@@ -13,6 +13,7 @@ import {
   getStartingPrice,
   type ShopifyProduct,
 } from "@/lib/shopify";
+import { useSiteContent } from "@/lib/site-content";
 
 export const Route = createFileRoute("/shop/$slug")({
   loader: async ({ params }) => {
@@ -36,24 +37,12 @@ export const Route = createFileRoute("/shop/$slug")({
         ]
       : [{ title: "Product — MELANVÉE" }],
   }),
-  notFoundComponent: () => (
-    <SiteLayout>
-      <div className="container-luxe py-32 text-center space-y-4">
-        <div className="eyebrow">Not found</div>
-        <h1 className="font-serif text-4xl text-espresso">This piece has moved.</h1>
-        <Link
-          to="/shop"
-          className="inline-block border-b border-cocoa pb-1 text-[0.72rem] tracking-[0.25em] uppercase text-cocoa"
-        >
-          Back to the shop
-        </Link>
-      </div>
-    </SiteLayout>
-  ),
+  notFoundComponent: () => <ProductNotFound />,
   component: ProductPage,
 });
 
 function ProductPage() {
+  const { text } = useSiteContent();
   const { product, related }: { product: ShopifyProduct; related: ShopifyProduct[] } =
     Route.useLoaderData();
   const { add } = useCart();
@@ -72,6 +61,11 @@ function ProductPage() {
   const [selectedImage, setSelectedImage] = useState(getProductImage(product));
   const variant = findVariant(product, selectedOptions);
   const images = product.images.edges.map(({ node }) => node);
+  const customizationNote = text(
+    "product.customization.note",
+    "Looking to customize your order? Message hello@melanvee.com.",
+  );
+  const customizationParts = customizationNote.split("hello@melanvee.com");
 
   useEffect(() => {
     setSelectedImage(getProductImage(product));
@@ -155,11 +149,20 @@ function ProductPage() {
             {product.description || "Discover the MELANVÉE signature collection."}
           </p>
           <p className="text-sm text-muted-foreground">
-            Looking to customize your order?{" "}
-            <a href="mailto:hello@melanvee.com" className="text-cocoa underline underline-offset-4">
-              Message hello@melanvee.com
-            </a>
-            .
+            {customizationParts.length > 1 ? (
+              <>
+                {customizationParts[0]}
+                <a
+                  href="mailto:hello@melanvee.com"
+                  className="text-cocoa underline underline-offset-4"
+                >
+                  hello@melanvee.com
+                </a>
+                {customizationParts.slice(1).join("hello@melanvee.com")}
+              </>
+            ) : (
+              customizationNote
+            )}
           </p>
 
           {product.options
@@ -260,14 +263,16 @@ function ProductPage() {
         <section className="container-luxe py-16 md:py-20 border-t border-border mt-8">
           <div className="flex items-end justify-between mb-8">
             <div>
-              <div className="eyebrow">Pairs with</div>
-              <h2 className="font-serif text-3xl text-espresso mt-2">More from the collection</h2>
+              <div className="eyebrow">{text("product.related.eyebrow", "Pairs with")}</div>
+              <h2 className="font-serif text-3xl text-espresso mt-2">
+                {text("product.related.title", "More from the collection")}
+              </h2>
             </div>
             <Link
               to="/shop"
               className="text-[0.7rem] tracking-[0.25em] uppercase text-cocoa border-b border-cocoa pb-1"
             >
-              View all
+              {text("product.related.link", "View all")}
             </Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
@@ -288,6 +293,26 @@ function ProductPage() {
           </div>
         </section>
       )}
+    </SiteLayout>
+  );
+}
+
+function ProductNotFound() {
+  const { text } = useSiteContent();
+  return (
+    <SiteLayout>
+      <div className="container-luxe py-32 text-center space-y-4">
+        <div className="eyebrow">{text("product.not-found.eyebrow", "Not found")}</div>
+        <h1 className="font-serif text-4xl text-espresso">
+          {text("product.not-found.title", "This piece has moved.")}
+        </h1>
+        <Link
+          to="/shop"
+          className="inline-block border-b border-cocoa pb-1 text-[0.72rem] tracking-[0.25em] uppercase text-cocoa"
+        >
+          Back to the shop
+        </Link>
+      </div>
     </SiteLayout>
   );
 }

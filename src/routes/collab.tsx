@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { useState } from "react";
 import { z } from "zod";
+import { useSiteContent } from "@/lib/site-content";
 
 export const Route = createFileRoute("/collab")({
   head: () => ({
@@ -34,6 +35,7 @@ const Schema = z.object({
 });
 
 function CollabPage() {
+  const { text } = useSiteContent();
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
@@ -74,13 +76,15 @@ function CollabPage() {
     <SiteLayout>
       <section className="bg-cream py-20 md:py-28">
         <div className="container-luxe max-w-3xl mx-auto text-center space-y-5">
-          <div className="eyebrow">Partnerships</div>
+          <div className="eyebrow">{text("collab.eyebrow", "Partnerships")}</div>
           <h1 className="font-serif text-5xl md:text-6xl text-espresso text-balance">
-            Let's make something quietly loud.
+            {text("collab.title", "Let's make something quietly loud.")}
           </h1>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Creators, hair stylists, salons and complementary brands — we partner with people who
-            share our taste for softness, realism and intention. Tell us about you.
+            {text(
+              "collab.description",
+              "Creators, hair stylists, salons and complementary brands — we partner with people who share our taste for softness, realism and intention. Tell us about you.",
+            )}
           </p>
         </div>
       </section>
@@ -89,11 +93,15 @@ function CollabPage() {
         <div className="max-w-2xl mx-auto">
           {sent ? (
             <div className="bg-cocoa text-cream p-12 text-center space-y-4">
-              <div className="eyebrow text-blush">Received</div>
-              <h2 className="font-serif text-3xl">Thank you — we'll be in touch.</h2>
+              <div className="eyebrow text-blush">{text("collab.success.eyebrow", "Received")}</div>
+              <h2 className="font-serif text-3xl">
+                {text("collab.success.title", "Thank you — we'll be in touch.")}
+              </h2>
               <p className="text-cream/80 text-sm">
-                Our partnerships team reviews every application personally. Expect a reply within
-                5–7 business days.
+                {text(
+                  "collab.success.description",
+                  "Our partnerships team reviews every application personally. Expect a reply within 5–7 business days.",
+                )}
               </p>
             </div>
           ) : (
@@ -101,7 +109,9 @@ function CollabPage() {
               onSubmit={(event) => void onSubmit(event)}
               className="space-y-5 bg-ivory border border-border p-8 md:p-10"
             >
-              <h2 className="font-serif text-2xl text-espresso">Collaboration application</h2>
+              <h2 className="font-serif text-2xl text-espresso">
+                {text("collab.form.title", "Collaboration application")}
+              </h2>
 
               <div className="grid md:grid-cols-2 gap-5">
                 <Field label="Full name" name="fullName" />

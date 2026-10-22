@@ -236,6 +236,50 @@ export type ShopifyCollection = {
   image?: ShopifyImage | null;
 };
 
+export type ShopifyCollectionWithProducts = ShopifyCollection & {
+  products: ShopifyProduct[];
+};
+
+export async function getCollectionsWithProducts(
+  first = 10,
+  productsFirst = 50,
+): Promise<ShopifyCollectionWithProducts[]> {
+  const query = `
+    ${PRODUCT_FRAGMENT}
+    query GetCollectionsWithProducts($first: Int!, $productsFirst: Int!) {
+      collections(first: $first) {
+        edges {
+          node {
+            id
+            handle
+            title
+            description
+            image { url altText width height }
+            products(first: $productsFirst) {
+              edges { node { ...ProductFragment } }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const data = await shopifyFetch<{
+    collections: {
+      edges: {
+        node: ShopifyCollection & {
+          products: { edges: { node: ShopifyProduct }[] };
+        };
+      }[];
+    };
+  }>(query, { first, productsFirst });
+
+  return data.collections.edges.map(({ node }) => ({
+    ...node,
+    products: node.products.edges.map(({ node: product }) => product),
+  }));
+}
+
 export async function getCollections(first = 10): Promise<ShopifyCollection[]> {
   const query = `
     query GetCollections($first: Int!) {

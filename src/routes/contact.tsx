@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { Mail, MessageCircle, Instagram, Clock } from "lucide-react";
 import { useState } from "react";
+import { useSiteContent } from "@/lib/site-content";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -22,6 +23,7 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const { text } = useSiteContent();
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -50,13 +52,15 @@ function ContactPage() {
     <SiteLayout>
       <section className="container-luxe py-20 md:py-28">
         <div className="max-w-2xl mx-auto text-center space-y-5 mb-16 fade-up">
-          <div className="eyebrow">Concierge</div>
+          <div className="eyebrow">{text("contact.eyebrow", "Concierge")}</div>
           <h1 className="font-serif text-5xl md:text-6xl text-espresso text-balance">
-            We're here, softly.
+            {text("contact.title", "We're here, softly.")}
           </h1>
           <p className="text-muted-foreground text-lg">
-            Texture matching, install help, returns, or just hello — our concierge replies within
-            the hour, Mon–Sat.
+            {text(
+              "contact.description",
+              "Texture matching, install help, returns, or just hello — our concierge replies within the hour, Mon–Sat.",
+            )}
           </p>
         </div>
 
@@ -67,14 +71,24 @@ function ContactPage() {
               <ContactRow icon={MessageCircle} title="WhatsApp" value="+44 7760 317 678" />
               <ContactRow icon={Instagram} title="Instagram" value="@melanvee" />
 
-              <ContactRow icon={Clock} title="Reply time" value="Within 1 hour · Mon–Sat 9–6 GMT" />
+              <ContactRow
+                icon={Clock}
+                title="Reply time"
+                value={text("contact.reply-time", "Within 1 hour · Mon–Sat 9–6 GMT")}
+              />
             </div>
             <div className="bg-cocoa text-cream p-8 space-y-3">
-              <div className="eyebrow text-blush">Texture matching</div>
-              <h3 className="font-serif text-2xl">Not sure what suits you?</h3>
+              <div className="eyebrow text-blush">
+                {text("contact.matching.eyebrow", "Texture matching")}
+              </div>
+              <h3 className="font-serif text-2xl">
+                {text("contact.matching.title", "Not sure what suits you?")}
+              </h3>
               <p className="text-cream/80 text-sm">
-                Send us a clear photo of your natural hair — we'll recommend the closest match from
-                the house, free of charge.
+                {text(
+                  "contact.matching.description",
+                  "Send us a clear photo of your natural hair — we'll recommend the closest match from the house, free of charge.",
+                )}
               </p>
               <a
                 href="https://wa.me/447760317678"
@@ -89,7 +103,9 @@ function ContactPage() {
             onSubmit={(event) => void handleSubmit(event)}
             className="space-y-5 bg-ivory border border-border p-8"
           >
-            <h2 className="font-serif text-2xl text-espresso">Send a note</h2>
+            <h2 className="font-serif text-2xl text-espresso">
+              {text("contact.form.title", "Send a note")}
+            </h2>
             <Field label="Name" name="name" />
             <Field label="Email" name="email" type="email" />
             <Field label="Order number (optional)" name="order" required={false} />
@@ -110,12 +126,15 @@ function ContactPage() {
             </div>
             {status === "sent" && (
               <p role="status" className="text-sm text-green-800">
-                Your message has been sent. We’ll be in touch shortly.
+                {text("contact.success", "Your message has been sent. We’ll be in touch shortly.")}
               </p>
             )}
             {status === "error" && (
               <p role="alert" className="text-sm text-destructive">
-                We couldn’t send your message. Please email customercare@melanvee.com.
+                {text(
+                  "contact.failure",
+                  "We couldn’t send your message. Please email customercare@melanvee.com.",
+                )}
               </p>
             )}
             <button
