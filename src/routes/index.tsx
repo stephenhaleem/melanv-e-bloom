@@ -57,19 +57,29 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
+const BESTSELLER_NAMES = [
+  { name: "Kimi Curl", match: ["kimi curl"] },
+  { name: "Kinky Curl Crochet Human Hair", match: ["kinky curl crochet", "kinky curl crotchet"] },
+  { name: "Zuri Kinky Straight", match: ["zuri kinky straight", "zuri"] },
+  { name: "Coco Curl", match: ["coco curl"] },
+];
+
 function HomePage() {
-  const { products, collections } = Route.useLoaderData();
+  const { products } = Route.useLoaderData();
+  const bestsellers = BESTSELLER_NAMES.map((b) => ({
+    name: b.name,
+    product: products.find((p) => b.match.some((m) => p.title.toLowerCase().includes(m))),
+  }));
 
   return (
     <SiteLayout>
-      <Hero
-        featured={products.find((product) => product.title.toLowerCase().includes("kimi curl"))}
-      />
-      <Marquee />
+      <Hero />
+      <Collections />
       <ValueProps />
-      <Collections collections={collections} />
-      <Bestsellers products={products} />
+      <Bestsellers items={bestsellers} />
+      <Marquee />
       <WhyMelanvee />
+      <FilmSection />
       <BeforeAfter />
       <Community />
       <Testimonials />
@@ -81,96 +91,104 @@ function HomePage() {
 }
 
 /* -------------------- HERO -------------------- */
-function Hero({ featured }: { featured?: ShopifyProduct }) {
-  const { text, image } = useSiteContent();
+function Hero() {
+  const { image } = useSiteContent();
   return (
     <section className="bg-ivory">
-      {/* Mobile-first editorial composition */}
-      <div className="container-luxe pt-4 pb-20 md:pt-8 md:pb-32">
-        <div className="relative">
-          <div className="aspect-[4/5] md:aspect-[16/10] w-full overflow-hidden bg-sand">
-            <img
-              src={image("image.home.hero", hero)}
-              alt="A woman wearing a Melanvée textured wig, photographed in rich burgundy light"
-              className="w-full h-full object-contain md:object-cover"
-              width={1600}
-              height={1280}
-              fetchPriority="high"
-            />
-          </div>
-
-          {/* Editorial product inset — offset, flush-right, hairline border */}
-          <div className="absolute bottom-6 left-6 right-0 md:bottom-10 md:left-auto md:right-10 md:max-w-sm bg-ivory/95 backdrop-blur-md p-7 md:p-8 border-l border-border shadow-[0_30px_60px_-30px_rgba(44,24,16,0.18)]">
-            <span className="block text-[0.6rem] tracking-[0.3em] uppercase text-muted-foreground mb-3 font-medium">
-              Signature Selection
-            </span>
-            <h2 className="font-serif text-2xl md:text-3xl font-light italic leading-none mb-3 text-espresso">
-              {featured?.title ?? "The MELANVÉE Collection"}
-            </h2>
-            <p className="text-[0.7rem] tracking-wide text-muted-foreground leading-relaxed mb-5 font-light">
-              Glueless · Pre-styled · Beginner friendly
-            </p>
-            <div className="flex items-center justify-between">
-              {featured && (
-                <Price
-                  gbp={getStartingPrice(featured)}
-                  className="font-serif text-lg text-espresso"
-                />
-              )}
-              {featured ? (
-                <Link
-                  to="/shop/$slug"
-                  params={{ slug: featured.handle }}
-                  className="text-[0.6rem] uppercase tracking-[0.2em] border-b border-espresso pb-1 text-espresso"
-                >
-                  View details
-                </Link>
-              ) : (
-                <Link
-                  to="/shop"
-                  className="text-[0.6rem] uppercase tracking-[0.2em] border-b border-espresso pb-1 text-espresso"
-                >
-                  View details
-                </Link>
-              )}
-            </div>
-          </div>
+      <div className="container-luxe pt-8 pb-16 md:pt-12 md:pb-24 text-center">
+        <h1 className="font-serif text-[3.2rem] leading-none tracking-[0.18em] text-burgundy sm:text-7xl md:text-[7.5rem] md:tracking-[0.22em] fade-up">
+          MELANVÉE
+        </h1>
+        <div className="mx-auto mt-4 mb-8 flex items-center justify-center gap-3 md:mb-10">
+          <span className="h-px w-10 bg-burgundy/40" />
+          <span className="text-[0.6rem] tracking-[0.4em] uppercase text-burgundy/70">London</span>
+          <span className="h-px w-10 bg-burgundy/40" />
         </div>
 
-        {/* Editorial caption block — generous negative space */}
-        <div className="mt-24 md:mt-32 max-w-xl md:px-4">
-          <div className="flex items-center gap-3 mb-8">
-            <span className="h-px w-6 bg-border" />
-            <span className="text-[0.65rem] tracking-[0.32em] uppercase text-muted-foreground font-medium">
-              {text("home.hero.eyebrow", "The Burgundy Collection · No.04")}
-            </span>
-          </div>
-          <h1 className="font-serif text-5xl md:text-7xl leading-[1.05] font-light text-espresso text-balance mb-8">
-            {text("home.hero.title", "Made to feel like yours.")}
-          </h1>
-          <p className="text-muted-foreground text-[0.95rem] md:text-base leading-[1.9] font-light max-w-md mb-10">
-            {text(
-              "home.hero.description",
-              "Textured wigs and protective styles, crafted with quiet luxury in mind — designed for the woman who values her time as much as her aesthetic.",
-            )}
+        <div className="mx-auto aspect-[4/5] w-full max-w-5xl overflow-hidden bg-sand md:aspect-[16/9]">
+          <img
+            src={image("image.home.hero", hero)}
+            alt="A woman wearing a Melanvée textured wig"
+            className="h-full w-full object-cover"
+            width={1600}
+            height={1280}
+            fetchPriority="high"
+          />
+        </div>
+
+        <div className="mx-auto mt-12 max-w-2xl md:mt-16">
+          <p className="text-[0.7rem] font-medium tracking-[0.38em] uppercase text-burgundy md:text-xs">
+            Textured hair, considered differently
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 max-w-md">
+          <h2 className="mt-6 font-serif text-4xl leading-[1.08] text-espresso text-balance md:text-6xl">
+            The texture you love.{" "}
+            <em className="text-burgundy">The freedom to wear it your way.</em>
+          </h2>
+          <p className="mx-auto mt-6 max-w-lg text-[0.95rem] leading-[1.85] text-muted-foreground">
+            Discover textured wigs and protective styles designed for natural-looking blends,
+            versatile styling and more freedom in your hair routine.
+          </p>
+          <div className="mt-10 flex flex-col items-center gap-6">
             <Link
               to="/shop"
-              className="flex-1 text-center px-10 py-4 border border-espresso text-[0.65rem] uppercase tracking-[0.28em] text-espresso hover:bg-espresso hover:text-cream transition-colors duration-500"
+              className="w-full max-w-sm bg-burgundy px-10 py-5 text-[0.7rem] uppercase tracking-[0.32em] text-cream shadow-[0_20px_40px_-20px_var(--burgundy)] transition-colors duration-500 hover:bg-burgundy-deep"
             >
-              Discover the Collection
+              Shop textured hair
+            </Link>
+            <Link
+              to="/textures"
+              className="group inline-flex items-center gap-2 text-sm text-espresso"
+            >
+              Not sure where to start?{" "}
+              <span className="border-b border-burgundy pb-0.5 text-burgundy">Find your style</span>
+              <ArrowRight
+                size={15}
+                className="text-burgundy transition-transform group-hover:translate-x-1"
+              />
             </Link>
           </div>
-          <div className="flex items-center gap-6 pt-10 text-[0.7rem] text-muted-foreground tracking-wide">
-            <div className="flex items-center gap-2">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star key={i} size={10} className="fill-cocoa text-cocoa" />
-              ))}
-              <span className="ml-1">Loved by the MELANVÉE community</span>
-            </div>
-          </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------- FILM (video slot) -------------------- */
+function FilmSection() {
+  const { text, image } = useSiteContent();
+  const videoUrl = text("home.film.url", "");
+  return (
+    <section className="container-luxe py-24 md:py-32">
+      <div className="mb-10 text-center">
+        <div className="eyebrow mb-3">The Film</div>
+        <h2 className="font-serif text-4xl text-espresso md:text-5xl">See it move.</h2>
+      </div>
+      <div className="relative mx-auto aspect-[4/5] max-w-5xl overflow-hidden bg-burgundy-deep md:aspect-[21/9]">
+        {videoUrl ? (
+          <video
+            src={videoUrl}
+            className="h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        ) : (
+          <>
+            <img
+              src={image("image.home.texture", textureCloseup)}
+              alt="Melanvée curls in motion"
+              loading="lazy"
+              className="h-full w-full object-cover opacity-70"
+            />
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-cream">
+              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-cream/70">
+                <Play size={20} className="ml-1" />
+              </span>
+              <span className="text-[0.65rem] uppercase tracking-[0.3em]">Coming soon</span>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
@@ -237,6 +255,12 @@ function ValueProps() {
   ];
   return (
     <section className="container-luxe py-24 md:py-32">
+      <div className="mb-14 text-center">
+        <div className="eyebrow mb-3">Why it's different</div>
+        <h2 className="font-serif text-4xl text-espresso md:text-5xl text-balance">
+          Made with intention, down to the strand.
+        </h2>
+      </div>
       <div className="grid md:grid-cols-3 gap-x-12 gap-y-14">
         {props.map(({ icon: Icon, t, d }) => (
           <div key={t} className="space-y-3">
@@ -251,33 +275,31 @@ function ValueProps() {
 }
 
 /* -------------------- COLLECTIONS -------------------- */
-function Collections({ collections }: { collections: Awaited<ReturnType<typeof getCollections>> }) {
-  const { text, image } = useSiteContent();
+const HOME_COLLECTIONS = [
+  { title: "U/V Part Wigs", note: "Seamless leave-out", img: colUpart },
+  { title: "Half Wigs", note: "Half the install", img: colTextured },
+  { title: "Crochet Hair", note: "Protective, premium", img: textureCloseup },
+  { title: "4C Edges Wigs", note: "Edges that match yours", img: colPonytail },
+  { title: "Bundles", note: "Raw textured weft", img: colBundles },
+];
+
+function Collections() {
   return (
     <section className="bg-cream py-24 md:py-32">
       <div className="container-luxe">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
-          <div>
-            <div className="eyebrow mb-3">{text("home.collections.eyebrow", "Edits")}</div>
-            <h2 className="font-serif text-4xl md:text-5xl text-espresso max-w-xl text-balance">
-              {text("home.collections.title", "A wardrobe of textures. Yours to live in.")}
-            </h2>
-          </div>
-          <Link
-            to="/shop"
-            className="text-[0.72rem] tracking-[0.25em] uppercase text-cocoa border-b border-cocoa pb-1 self-start md:self-auto hover:text-espresso"
-          >
-            View all collections
-          </Link>
+        <div className="mb-14 text-center">
+          <div className="eyebrow mb-3">The collections</div>
+          <h2 className="font-serif text-4xl md:text-5xl text-espresso text-balance">
+            Find your kind of hair.
+          </h2>
         </div>
-
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-          {collections.map((collection) => (
-            <Link to="/shop" key={collection.id} className="group block">
+        <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-5">
+          {HOME_COLLECTIONS.map((c) => (
+            <Link to="/shop" key={c.title} className="group block">
               <div className="aspect-[4/5] overflow-hidden bg-sand">
                 <img
-                  src={collection.image?.url ?? image("image.home.texture", textureCloseup)}
-                  alt={collection.image?.altText ?? collection.title}
+                  src={c.img}
+                  alt={c.title}
                   loading="lazy"
                   width={1000}
                   height={1300}
@@ -286,9 +308,8 @@ function Collections({ collections }: { collections: Awaited<ReturnType<typeof g
               </div>
               <div className="pt-4 flex items-end justify-between">
                 <div>
-                  <h3 className="font-serif text-lg md:text-xl text-espresso">
-                    {collection.title}
-                  </h3>
+                  <h3 className="font-serif text-lg md:text-xl text-espresso">{c.title}</h3>
+                  <p className="text-xs text-muted-foreground">{c.note}</p>
                 </div>
                 <Plus
                   size={16}
@@ -346,16 +367,33 @@ function Bestsellers({ products }: { products: ShopifyProduct[] }) {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            adding={addingId === product.id}
-            added={addedId === product.id}
-            error={errorId === product.id}
-            onQuickAdd={() => void quickAdd(product)}
-          />
-        ))}
+        {items.map(({ name, product }) =>
+          product ? (
+            <ProductCard
+              key={name}
+              product={product}
+              adding={addingId === product.id}
+              added={addedId === product.id}
+              error={errorId === product.id}
+              onQuickAdd={() => void quickAdd(product)}
+            />
+          ) : (
+            <Link to="/shop" key={name} className="group block">
+              <div className="aspect-[4/5] overflow-hidden bg-sand">
+                <img
+                  src={name.includes("Crochet") ? textureCloseup : ugc2}
+                  alt={name}
+                  loading="lazy"
+                  className="h-full w-full object-cover group-hover:scale-[1.04] transition-transform duration-[1200ms]"
+                />
+              </div>
+              <div className="pt-4">
+                <h3 className="font-serif text-lg text-espresso">{name}</h3>
+                <span className="text-sm text-muted-foreground">Coming to the shop soon</span>
+              </div>
+            </Link>
+          ),
+        )}
       </div>
     </section>
   );

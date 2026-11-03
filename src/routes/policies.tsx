@@ -88,60 +88,8 @@ function PoliciesPage() {
           </TabsList>
 
           <TabsContent value="shipping">
-            <PolicySection id="shipping" title={text("policies.shipping.title", "Shipping Policy")}>
-              <PolicyTable
-                rows={[
-                  {
-                    topic: "Overview",
-                    detail: text(
-                      "policies.shipping.p1",
-                      "All MELANVÉE orders are dispatched promptly upon processing.",
-                    ),
-                  },
-                  {
-                    topic: "Dispatch",
-                    detail: text(
-                      "policies.shipping.li1",
-                      "Dispatch is within 24 to 72 hours of your order. Times may vary slightly during busy periods and weekends.",
-                    ),
-                  },
-                  {
-                    topic: "UK and Europe",
-                    detail: text(
-                      "policies.shipping.li2",
-                      "UK and Europe delivery takes 3 to 5 working days after dispatch.",
-                    ),
-                  },
-                  {
-                    topic: "Rest of world",
-                    detail: text(
-                      "policies.shipping.li3",
-                      "Rest of world delivery takes 3 to 8 working days after dispatch.",
-                    ),
-                  },
-                  {
-                    topic: "UK shipping",
-                    detail: text(
-                      "policies.shipping.li4",
-                      "Free UK shipping on all orders over £100.",
-                    ),
-                  },
-                  {
-                    topic: "International shipping",
-                    detail: text(
-                      "policies.shipping.li5",
-                      "Free international shipping on all orders over £100.",
-                    ),
-                  },
-                  {
-                    topic: "Tracking",
-                    detail: text(
-                      "policies.shipping.p2",
-                      "All orders are tracked. We will email you a tracking link as soon as your order leaves us.",
-                    ),
-                  },
-                ]}
-              />
+            <PolicySection id="shipping" title="Shipping Policy">
+              <ShippingPolicy />
             </PolicySection>
           </TabsContent>
 
