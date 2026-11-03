@@ -15,6 +15,20 @@
       "when": 1793708357312,
       "tag": "0001_secure_site_content",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793708372666,
+      "tag": "0002_create_reviews",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793708376516,
+      "tag": "0003_add_review_video_support",
+      "breakpoints": true
     }
   ]
 }

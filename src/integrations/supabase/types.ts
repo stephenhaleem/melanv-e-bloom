@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      reviews: {
+        Row: {
+          body: string
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          photo_urls: string[]
+          product_id: string
+          rating: number
+          title: string | null
+          video_urls: string[]
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          photo_urls?: string[]
+          product_id: string
+          rating: number
+          title?: string | null
+          video_urls?: string[]
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          photo_urls?: string[]
+          product_id?: string
+          rating?: number
+          title?: string | null
+          video_urls?: string[]
+        }
+        Relationships: []
+      }
       site_copy: {
         Row: {
           key: string
