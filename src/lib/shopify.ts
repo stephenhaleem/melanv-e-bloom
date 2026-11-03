@@ -1,8 +1,23 @@
 import { SITE_URL } from "@/lib/site";
+import {
+  localAddCartLines,
+  localCollections,
+  localCollectionsWithProducts,
+  localCreateCart,
+  localGetCart,
+  localProductByHandle,
+  localProducts,
+  localRemoveCartLines,
+  localUpdateCartLines,
+  localUpdateCartNote,
+} from "./shopify-fallback";
 
 const SHOPIFY_DOMAIN = import.meta.env.VITE_SHOPIFY_DOMAIN;
 const SHOPIFY_STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
 const API_VERSION = "2024-01";
+
+/** True when real Shopify Storefront credentials are configured. */
+export const shopifyConfigured = Boolean(SHOPIFY_DOMAIN && SHOPIFY_STOREFRONT_TOKEN);
 
 const STOREFRONT_API_URL = `https://${SHOPIFY_DOMAIN}/api/${API_VERSION}/graphql.json`;
 
