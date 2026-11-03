@@ -9,6 +9,11 @@
  */
 
 import { PRODUCTS, LENGTHS, type Product } from "@/lib/products";
+import colUpart from "@/assets/collection-upart.jpg";
+import colPonytail from "@/assets/collection-ponytail.jpg";
+import colBundles from "@/assets/collection-bundles.jpg";
+import colTextured from "@/assets/collection-textured.jpg";
+import toolStraightener from "@/assets/tool-straightener.jpg";
 import type {
   ShopifyCart,
   ShopifyCartLine,
@@ -23,27 +28,27 @@ const COLLECTION_META: Record<Product["segment"], { handle: string; description:
   "U/V Part Wigs": {
     handle: "u-v-part-wigs",
     description: "Glueless U-part and V-part constructions that blend like leave-out.",
-    image: "u-v-part-wigs",
+    image: colUpart,
   },
   "Half Wig": {
     handle: "half-wigs",
     description: "Quick, lightweight coverage that slides on and goes.",
-    image: "half-wigs",
+    image: colPonytail,
   },
   Crochet: {
     handle: "crochet",
     description: "Protective crochet installs with soft, natural movement.",
-    image: "crochet",
+    image: colBundles,
   },
   "Layered Wigs": {
     handle: "layered-wigs",
     description: "Full lace-free layers with body, lift and bounce.",
-    image: "layered-wigs",
+    image: colTextured,
   },
   "Hot Tools": {
     handle: "hot-tools",
     description: "The finishing tools behind every MELANVÉE style.",
-    image: "hot-tools",
+    image: toolStraightener,
   },
 };
 
@@ -54,9 +59,6 @@ const SEGMENT_ORDER: Product["segment"][] = [
   "Layered Wigs",
   "Hot Tools",
 ];
-
-const SEGMENT_IMAGES: Record<string, string> = {};
-void SEGMENT_IMAGES;
 
 const gbp = (n: number) => n.toFixed(2);
 
