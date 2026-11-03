@@ -194,6 +194,8 @@ const CART_FRAGMENT = `
 `;
 
 export async function getProducts(first = 20): Promise<ShopifyProduct[]> {
+  if (!shopifyConfigured) return localProducts(first);
+
   const query = `
     ${PRODUCT_FRAGMENT}
     query GetProducts($first: Int!) {
@@ -211,6 +213,8 @@ export async function getProducts(first = 20): Promise<ShopifyProduct[]> {
 }
 
 export async function getProductByHandle(handle: string): Promise<ShopifyProduct | null> {
+  if (!shopifyConfigured) return localProductByHandle(handle);
+
   const query = `
     ${PRODUCT_FRAGMENT}
     query GetProduct($handle: String!) {
@@ -259,6 +263,8 @@ export async function getCollectionsWithProducts(
   first = 10,
   productsFirst = 50,
 ): Promise<ShopifyCollectionWithProducts[]> {
+  if (!shopifyConfigured) return localCollectionsWithProducts(first, productsFirst);
+
   const query = `
     ${PRODUCT_FRAGMENT}
     query GetCollectionsWithProducts($first: Int!, $productsFirst: Int!) {
@@ -296,6 +302,8 @@ export async function getCollectionsWithProducts(
 }
 
 export async function getCollections(first = 10): Promise<ShopifyCollection[]> {
+  if (!shopifyConfigured) return localCollections(first);
+
   const query = `
     query GetCollections($first: Int!) {
       collections(first: $first) {
@@ -321,6 +329,8 @@ export async function getCollections(first = 10): Promise<ShopifyCollection[]> {
 }
 
 export async function getCollection(handle: string): Promise<ShopifyCollection | null> {
+  if (!shopifyConfigured) return null;
+
   const query = `
     query GetCollectionMeta($handle: String!) {
       collection(handle: $handle) {
@@ -340,6 +350,8 @@ export async function getCollection(handle: string): Promise<ShopifyCollection |
 export async function createCart(
   lines?: { merchandiseId: string; quantity: number }[],
 ): Promise<ShopifyCart> {
+  if (!shopifyConfigured) return localCreateCart(lines);
+
   const query = `
     ${CART_FRAGMENT}
     mutation CreateCart($lines: [CartLineInput!]) {
@@ -365,6 +377,8 @@ export async function createCart(
 }
 
 export async function getCart(cartId: string): Promise<ShopifyCart | null> {
+  if (!shopifyConfigured) return localGetCart(cartId);
+
   const query = `
     ${CART_FRAGMENT}
     query GetCart($cartId: ID!) {
@@ -380,6 +394,8 @@ export async function addCartLines(
   cartId: string,
   lines: { merchandiseId: string; quantity: number }[],
 ): Promise<ShopifyCart> {
+  if (!shopifyConfigured) return localAddCartLines(cartId, lines);
+
   const query = `
     ${CART_FRAGMENT}
     mutation AddCartLines($cartId: ID!, $lines: [CartLineInput!]!) {
@@ -408,6 +424,8 @@ export async function updateCartLines(
   cartId: string,
   lines: { id: string; quantity: number }[],
 ): Promise<ShopifyCart> {
+  if (!shopifyConfigured) return localUpdateCartLines(cartId, lines);
+
   const query = `
     ${CART_FRAGMENT}
     mutation UpdateCartLines($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
@@ -433,6 +451,8 @@ export async function updateCartLines(
 }
 
 export async function removeCartLines(cartId: string, lineIds: string[]): Promise<ShopifyCart> {
+  if (!shopifyConfigured) return localRemoveCartLines(cartId, lineIds);
+
   const query = `
     ${CART_FRAGMENT}
     mutation RemoveCartLines($cartId: ID!, $lineIds: [ID!]!) {
@@ -458,6 +478,8 @@ export async function removeCartLines(cartId: string, lineIds: string[]): Promis
 }
 
 export async function updateCartNote(cartId: string, note: string): Promise<ShopifyCart> {
+  if (!shopifyConfigured) return localUpdateCartNote(cartId, note);
+
   const query = `
     ${CART_FRAGMENT}
     mutation UpdateCartNote($cartId: ID!, $note: String!) {
@@ -491,6 +513,8 @@ export async function updateCartNote(cartId: string, note: string): Promise<Shop
  * `checkoutUrl` in `buildCheckoutUrl()` inside shopify-cart.ts.
  */
 export async function setCartReturnUrl(cartId: string): Promise<void> {
+  if (!shopifyConfigured) return;
+
   const query = `
     mutation SetCartAttributes($cartId: ID!, $attributes: [AttributeInput!]!) {
       cartAttributesUpdate(cartId: $cartId, attributes: $attributes) {
