@@ -17,6 +17,8 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as HairCareRouteImport } from './routes/hair-care'
 import { Route as PoliciesRouteImport } from './routes/policies'
+import { Route as TexturesRouteImport } from './routes/textures'
+import { Route as WhyOurCurlsRouteImport } from './routes/why-our-curls'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
 
@@ -60,6 +62,16 @@ const PoliciesRoute = PoliciesRouteImport.update({
   path: '/policies',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TexturesRoute = TexturesRouteImport.update({
+  id: '/textures',
+  path: '/textures',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WhyOurCurlsRoute = WhyOurCurlsRouteImport.update({
+  id: '/why-our-curls',
+  path: '/why-our-curls',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopIndexRoute = ShopIndexRouteImport.update({
   id: '/shop/',
   path: '/shop/',
@@ -80,6 +92,8 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/hair-care': typeof HairCareRoute
   '/policies': typeof PoliciesRoute
+  '/textures': typeof TexturesRoute
+  '/why-our-curls': typeof WhyOurCurlsRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
 }
@@ -92,6 +106,8 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/hair-care': typeof HairCareRoute
   '/policies': typeof PoliciesRoute
+  '/textures': typeof TexturesRoute
+  '/why-our-curls': typeof WhyOurCurlsRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop': typeof ShopIndexRoute
 }
@@ -105,6 +121,8 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/hair-care': typeof HairCareRoute
   '/policies': typeof PoliciesRoute
+  '/textures': typeof TexturesRoute
+  '/why-our-curls': typeof WhyOurCurlsRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
 }
@@ -119,6 +137,8 @@ export interface FileRouteTypes {
     | '/faq'
     | '/hair-care'
     | '/policies'
+    | '/textures'
+    | '/why-our-curls'
     | '/shop/$slug'
     | '/shop/'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +151,8 @@ export interface FileRouteTypes {
     | '/faq'
     | '/hair-care'
     | '/policies'
+    | '/textures'
+    | '/why-our-curls'
     | '/shop/$slug'
     | '/shop'
   id:
@@ -143,6 +165,8 @@ export interface FileRouteTypes {
     | '/faq'
     | '/hair-care'
     | '/policies'
+    | '/textures'
+    | '/why-our-curls'
     | '/shop/$slug'
     | '/shop/'
   fileRoutesById: FileRoutesById
@@ -156,6 +180,8 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   HairCareRoute: typeof HairCareRoute
   PoliciesRoute: typeof PoliciesRoute
+  TexturesRoute: typeof TexturesRoute
+  WhyOurCurlsRoute: typeof WhyOurCurlsRoute
   ShopSlugRoute: typeof ShopSlugRoute
   ShopIndexRoute: typeof ShopIndexRoute
 }
@@ -218,6 +244,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PoliciesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/textures': {
+      id: '/textures'
+      path: '/textures'
+      fullPath: '/textures'
+      preLoaderRoute: typeof TexturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/why-our-curls': {
+      id: '/why-our-curls'
+      path: '/why-our-curls'
+      fullPath: '/why-our-curls'
+      preLoaderRoute: typeof WhyOurCurlsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop/': {
       id: '/shop/'
       path: '/shop'
@@ -244,6 +284,8 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   HairCareRoute: HairCareRoute,
   PoliciesRoute: PoliciesRoute,
+  TexturesRoute: TexturesRoute,
+  WhyOurCurlsRoute: WhyOurCurlsRoute,
   ShopSlugRoute: ShopSlugRoute,
   ShopIndexRoute: ShopIndexRoute,
 }
