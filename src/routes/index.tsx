@@ -367,16 +367,33 @@ function Bestsellers({ products }: { products: ShopifyProduct[] }) {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            adding={addingId === product.id}
-            added={addedId === product.id}
-            error={errorId === product.id}
-            onQuickAdd={() => void quickAdd(product)}
-          />
-        ))}
+        {items.map(({ name, product }) =>
+          product ? (
+            <ProductCard
+              key={name}
+              product={product}
+              adding={addingId === product.id}
+              added={addedId === product.id}
+              error={errorId === product.id}
+              onQuickAdd={() => void quickAdd(product)}
+            />
+          ) : (
+            <Link to="/shop" key={name} className="group block">
+              <div className="aspect-[4/5] overflow-hidden bg-sand">
+                <img
+                  src={name.includes("Crochet") ? textureCloseup : ugc2}
+                  alt={name}
+                  loading="lazy"
+                  className="h-full w-full object-cover group-hover:scale-[1.04] transition-transform duration-[1200ms]"
+                />
+              </div>
+              <div className="pt-4">
+                <h3 className="font-serif text-lg text-espresso">{name}</h3>
+                <span className="text-sm text-muted-foreground">Coming to the shop soon</span>
+              </div>
+            </Link>
+          ),
+        )}
       </div>
     </section>
   );
