@@ -21,9 +21,15 @@ import {
   Heart,
   Plus,
   ChevronDown,
+  ArrowRight,
+  Play,
 } from "lucide-react";
 import { useState } from "react";
 import hero from "@/assets/3AAB18E63E27A2827D03-IMG_7567.png";
+import colUpart from "@/assets/collection-upart.jpg";
+import colTextured from "@/assets/collection-textured.jpg";
+import colPonytail from "@/assets/collection-ponytail.jpg";
+import colBundles from "@/assets/collection-bundles.jpg";
 import textureCloseup from "@/assets/texture-closeup.jpg";
 import ugc1 from "@/assets/ugc-1.jpg";
 import ugc2 from "@/assets/ugc-2.jpg";
@@ -50,7 +56,7 @@ export const Route = createFileRoute("/")({
         content:
           "Premium textured wigs and protective styles designed for realism, comfort and effortless beauty.",
       },
-      { property: "og:image", content: hero },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:type", content: "website" },
     ],
   }),
@@ -325,7 +331,7 @@ function Collections() {
 }
 
 /* -------------------- BESTSELLERS -------------------- */
-function Bestsellers({ products }: { products: ShopifyProduct[] }) {
+function Bestsellers({ items }: { items: { name: string; product: ShopifyProduct | undefined }[] }) {
   const { text } = useSiteContent();
   const { add } = useCart();
   const [addingId, setAddingId] = useState<string | null>(null);

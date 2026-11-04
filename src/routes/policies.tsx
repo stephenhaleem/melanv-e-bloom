@@ -310,3 +310,46 @@ function PolicySection({
     </section>
   );
 }
+
+const SHIP_ZONES = [
+  { region: "United Kingdom", time: "3–5 business days" },
+  { region: "USA & Canada", time: "2–6 business days" },
+  { region: "Europe", time: "3–7 business days" },
+  { region: "Rest of the world", time: "3–8 business days" },
+];
+
+function ShippingPolicy() {
+  return (
+    <div className="space-y-12">
+      <div className="grid gap-px bg-border sm:grid-cols-3">
+        {[
+          ["Processing", "1–3 business days", "Every order is checked and packed by hand."],
+          ["Complimentary", "Over £100", "Free tracked shipping on qualifying orders."],
+          ["Tracked", "Every parcel", "A tracking link is emailed once your order ships."],
+        ].map(([k, v, n]) => (
+          <div key={k} className="bg-ivory p-6 text-center">
+            <div className="eyebrow mb-3">{k}</div>
+            <div className="font-serif text-2xl text-primary">{v}</div>
+            <p className="mt-2 text-sm text-muted-foreground">{n}</p>
+          </div>
+        ))}
+      </div>
+      <div>
+        <div className="eyebrow mb-4">Delivery times, after dispatch</div>
+        <ul className="divide-y divide-border border-y border-border">
+          {SHIP_ZONES.map((z) => (
+            <li key={z.region} className="flex items-baseline justify-between gap-4 py-5">
+              <span className="font-serif text-xl text-foreground">{z.region}</span>
+              <span className="text-sm uppercase tracking-[0.18em] text-primary">{z.time}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <p className="text-sm leading-relaxed text-muted-foreground">
+        Orders ship within 1–3 business days. Delivery times are estimates and may vary during
+        holidays or customs checks. International orders may be subject to local duties and
+        taxes. Questions? Email customercare@melanvee.com.
+      </p>
+    </div>
+  );
+}
