@@ -9,6 +9,8 @@ import { useSiteContent } from "@/lib/site-content";
 const DESKTOP_LEFT = [
   { to: "/", label: "Home" },
   { to: "/shop", label: "Shop" },
+  { to: "/textures", label: "Shop by Texture" },
+  { to: "/why-our-curls", label: "Why Our Curls Blend" },
 ] as const;
 
 const DESKTOP_RIGHT = [
@@ -122,6 +124,12 @@ export function Header() {
             >
               {text("nav.collab", "Collab")}
             </a>
+            <Link to="/textures" onClick={closeMenu} className="border-b border-border/40 py-2">
+              Shop by Texture
+            </Link>
+            <Link to="/why-our-curls" onClick={closeMenu} className="border-b border-border/40 py-2">
+              Why Our Curls Blend
+            </Link>
             <Link to="/contact" onClick={closeMenu} className="border-b border-border/40 py-2">
               {text("nav.contact", "Contact")}
             </Link>
