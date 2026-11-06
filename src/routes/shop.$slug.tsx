@@ -4,6 +4,7 @@ import { Heart, ChevronLeft, Check, Truck, Sparkles, ShieldCheck } from "lucide-
 import { SiteLayout } from "@/components/site/Layout";
 import { Price } from "@/lib/currency";
 import { useCart } from "@/lib/cart";
+import { getProductDetails } from "@/lib/product-details";
 import { ProductReviews } from "@/components/site/ProductReviews";
 import {
   findVariant,
@@ -148,6 +149,22 @@ function ProductPage() {
           <p className="text-muted-foreground leading-relaxed max-w-md">
             {product.description || "Discover the MELANVÉE signature collection."}
           </p>
+          {(() => {
+            const d = getProductDetails(product.title, product.productType);
+            return (
+              <div className="space-y-4 max-w-md">
+                <p className="text-sm text-muted-foreground leading-relaxed">{d.intro}</p>
+                <dl className="divide-y divide-border border-y border-border text-sm">
+                  {d.points.map(([k, v]) => (
+                    <div key={k} className="grid grid-cols-[7rem_1fr] gap-4 py-3">
+                      <dt className="eyebrow pt-0.5">{k}</dt>
+                      <dd className="text-muted-foreground">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            );
+          })()}
           <p className="text-sm text-muted-foreground">
             {customizationParts.length > 1 ? (
               <>

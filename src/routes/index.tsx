@@ -48,13 +48,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Premium textured wigs, protective styles and effortless beauty for the modern woman. Realism. Softness. Confidence.",
+          "Textured U/V part wigs, half wigs, crochet hair and bundles made to blend with your natural hair.",
       },
       { property: "og:title", content: "MELANVÉE — Made to feel like yours" },
       {
         property: "og:description",
         content:
-          "Premium textured wigs and protective styles designed for realism, comfort and effortless beauty.",
+          "Textured hair made to blend with your own — U/V part wigs, half wigs, crochet and bundles.",
       },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:type", content: "website" },
@@ -203,8 +203,8 @@ function FilmSection() {
 /* -------------------- MARQUEE -------------------- */
 function Marquee() {
   const items = [
-    "Pre-plucked HD lace",
-    "Glueless ready",
+    "U/V part · half wigs · crochet · bundles",
+    "Textures that blend with yours",
     "100% raw textured hair",
     "Beginner friendly",
     "Complimentary shipping over £100",
@@ -231,17 +231,17 @@ function ValueProps() {
     {
       icon: Sparkles,
       t: text("home.value.1.title", "Natural-looking blends"),
-      d: text("home.value.1.description", "HD lace and melted hairlines, made to disappear."),
+      d: text("home.value.1.description", "Textures matched to real hair, so the blend with your leave-out looks like you."),
     },
     {
       icon: Feather,
-      t: text("home.value.2.title", "Lightweight comfort"),
-      d: text("home.value.2.description", "Built airy. Built to wear all day, every day."),
+      t: text("home.value.2.title", "Your texture, honoured"),
+      d: text("home.value.2.description", "Kinky, coily, curly and bouncy patterns that reflect the hair we actually grow."),
     },
     {
       icon: HandHeart,
       t: text("home.value.3.title", "Beginner friendly"),
-      d: text("home.value.3.description", "Pre-styled, pre-plucked, ready out of the box."),
+      d: text("home.value.3.description", "Simple constructions — U/V part, half wig, crochet and bundles — easy to learn and wear."),
     },
     {
       icon: Shield,
@@ -250,13 +250,13 @@ function ValueProps() {
     },
     {
       icon: Wand2,
-      t: text("home.value.5.title", "Effortless installs"),
-      d: text("home.value.5.description", "Glueless. Adjustable. On in under 5 minutes."),
+      t: text("home.value.5.title", "Freedom to switch"),
+      d: text("home.value.5.description", "Wear it curly, stretched or straightened — style it your way, week to week."),
     },
     {
       icon: Gem,
-      t: text("home.value.6.title", "Premium quality"),
-      d: text("home.value.6.description", "Sourced, wefted and styled in small batches."),
+      t: text("home.value.6.title", "Made with care"),
+      d: text("home.value.6.description", "Every piece is checked by us before it leaves, so what arrives is what you saw."),
     },
   ];
   return (
@@ -538,27 +538,20 @@ function BeforeAfter() {
           )}
         </p>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
-        {[
-          image("image.home.customer.1", ugc1),
-          image("image.home.customer.2", ugc2),
-          image("image.home.customer.3", ugc3),
-          image("image.home.customer.4", ugc4),
-        ].map((src, i) => (
-          <div key={i} className="relative aspect-[3/4] overflow-hidden bg-sand group">
-            <img
-              src={src}
-              alt="Customer install"
-              loading="lazy"
-              width={900}
-              height={1100}
-              className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-[1200ms]"
-            />
-            <div className="absolute bottom-3 left-3 text-cream text-xs font-serif italic">
-              @melanvee.muse
+      <div className="overflow-hidden">
+        <div className="flex w-max marquee gap-3 md:gap-5">
+          {[...Array(4)].flatMap(() => [
+            image("image.home.customer.1", ugc1),
+            image("image.home.customer.2", ugc2),
+            image("image.home.customer.3", ugc3),
+            image("image.home.customer.4", ugc4),
+          ]).map((src, i) => (
+            <div key={i} className="relative aspect-[3/4] w-48 md:w-72 shrink-0 overflow-hidden bg-sand">
+              <img src={src} alt="Customer wearing Melanvée" loading="lazy" width={900} height={1100} className="w-full h-full object-cover" />
+              <div className="absolute bottom-3 left-3 text-cream text-xs font-serif italic">@melanvee.muse</div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -684,10 +677,10 @@ function HowItWorks() {
     ],
     [
       "02",
-      text("home.how-it-works.step2.title", "Install effortlessly"),
+      text("home.how-it-works.step2.title", "Blend with your leave-out"),
       text(
         "home.how-it-works.step2.description",
-        "Glueless, adjustable, pre-styled. Ready in under five minutes.",
+        "Leave out a little of your own hair and blend it with the texture you chose.",
       ),
     ],
     [
@@ -695,7 +688,7 @@ function HowItWorks() {
       text("home.how-it-works.step3.title", "Blend naturally"),
       text(
         "home.how-it-works.step3.description",
-        "Melted HD lace and a feather edge that disappears into the skin.",
+        "Because the texture matches yours, the finish looks like your own hair.",
       ),
     ],
     [

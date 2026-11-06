@@ -320,36 +320,15 @@ const SHIP_ZONES = [
 
 function ShippingPolicy() {
   return (
-    <div className="space-y-12">
-      <div className="grid gap-px bg-border sm:grid-cols-3">
-        {[
-          ["Processing", "1–3 business days", "Every order is checked and packed by hand."],
-          ["Complimentary", "Over £100", "Free tracked shipping on qualifying orders."],
-          ["Tracked", "Every parcel", "A tracking link is emailed once your order ships."],
-        ].map(([k, v, n]) => (
-          <div key={k} className="bg-ivory p-6 text-center">
-            <div className="eyebrow mb-3">{k}</div>
-            <div className="font-serif text-2xl text-primary">{v}</div>
-            <p className="mt-2 text-sm text-muted-foreground">{n}</p>
-          </div>
-        ))}
-      </div>
-      <div>
-        <div className="eyebrow mb-4">Delivery times, after dispatch</div>
-        <ul className="divide-y divide-border border-y border-border">
-          {SHIP_ZONES.map((z) => (
-            <li key={z.region} className="flex items-baseline justify-between gap-4 py-5">
-              <span className="font-serif text-xl text-foreground">{z.region}</span>
-              <span className="text-sm uppercase tracking-[0.18em] text-primary">{z.time}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <p className="text-sm leading-relaxed text-muted-foreground">
-        Orders ship within 1–3 business days. Delivery times are estimates and may vary during
-        holidays or customs checks. International orders may be subject to local duties and
-        taxes. Questions? Email customercare@melanvee.com.
-      </p>
-    </div>
+    <PolicyTable
+      rows={[
+        { topic: "Processing", detail: "All orders ship within 1–3 business days." },
+        ...SHIP_ZONES.map((z) => ({ topic: z.region, detail: `${z.time} after dispatch.` })),
+        { topic: "Complimentary shipping", detail: "Free shipping on all orders over £100." },
+        { topic: "Tracking", detail: "Every order is tracked. You'll receive a tracking link by email once it ships." },
+        { topic: "Duties & taxes", detail: "Orders outside the UK may be subject to local import duties or taxes, which are the customer's responsibility." },
+        { topic: "Questions", detail: "Email customercare@melanvee.com and we'll help." },
+      ]}
+    />
   );
 }

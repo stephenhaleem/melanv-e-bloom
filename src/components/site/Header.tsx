@@ -15,6 +15,7 @@ const DESKTOP_LEFT = [
 
 const DESKTOP_RIGHT = [
   { to: "/about", label: "About" },
+  { to: "/faq", label: "FAQ" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
@@ -75,9 +76,7 @@ export function Header() {
           <nav className="hidden items-center gap-8 text-sm text-cocoa md:flex">
             {DESKTOP_RIGHT.map((item) => (
               <Link key={item.to} to={item.to} className="transition-colors hover:text-espresso">
-                {item.to === "/about"
-                  ? text("nav.about", item.label)
-                  : text("nav.contact", item.label)}
+                {item.to === "/about" ? text("nav.about", item.label) : item.to === "/faq" ? "FAQ" : text("nav.contact", item.label)}
               </Link>
             ))}
             <a
@@ -129,6 +128,9 @@ export function Header() {
             </Link>
             <Link to="/why-our-curls" onClick={closeMenu} className="border-b border-border/40 py-2">
               Why Our Curls Blend
+            </Link>
+            <Link to="/faq" onClick={closeMenu} className="border-b border-border/40 py-2">
+              FAQ
             </Link>
             <Link to="/contact" onClick={closeMenu} className="border-b border-border/40 py-2">
               {text("nav.contact", "Contact")}
