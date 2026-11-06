@@ -28,6 +28,9 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
   {
     title: "Shipping & Delivery",
     items: [
+      ["Do you ship worldwide?", "Yes, we ship to the UK, USA, Canada, Europe and most of the rest of the world."],
+      ["Can I change my delivery address after ordering?", "Email customercare@melanvee.com as soon as possible. If your order hasn't shipped yet, we'll update it."],
+      ["My parcel is late. What should I do?", "Check your tracking link first. If it hasn't moved for a few days, email us with your order number and we'll chase it."],
       ["How quickly will my order ship?", "All orders ship within 1–3 business days."],
       [
         "How long does delivery take?",
@@ -47,6 +50,12 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
   {
     title: "Choosing Your Hair",
     items: [
+      ["What products do you sell?", "U/V part wigs, half wigs, crochet hair and bundles, plus hot tools for styling."],
+      ["Will the hair blend with my natural hair?", "That's the whole idea. Our textures are chosen to look like natural textured hair, so they blend with your leave-out."],
+      ["How much leave-out do I need?", "For U/V part wigs, a small section at your parting. For half wigs, your front hairline and edges."],
+      ["How many packs or bundles do I need?", "For a full look most people use 3 bundles, or 4 for longer lengths. Message us and we'll help you work it out."],
+      ["Can I add a special request to my order?", "Yes. Open your bag and use the order note box before checkout. We read every note before packing."],
+      ["Can I see the hair before I buy?", "Message us on WhatsApp and we can share extra photos or videos of the texture."],
       [
         "Which texture should I choose?",
         "Pick the texture closest to your natural hair for the most seamless blend. Our Shop by Texture page groups everything into Curly, Straight, Bouncy and Coily.",
@@ -65,6 +74,9 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
   {
     title: "Hair Care",
     items: [
+      ["How often should I wash my hair?", "Every 1–2 weeks with regular wear, or when you notice product build-up."],
+      ["How do I store it?", "Detangled, dry and loosely in its bag or on a stand, away from direct heat and sunlight."],
+      ["Will it tangle or shed?", "A little natural shedding is normal. Keep it moisturised and detangle gently to keep it at its best."],
       [
         "How do I care for my curls?",
         "Co-wash with a sulphate-free conditioner, detangle gently with fingers or a wide-tooth comb, and air dry on a stand.",
@@ -86,6 +98,8 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
   {
     title: "Returns & Exchanges",
     items: [
+      ["My order arrived damaged or wrong. What now?", "Email customercare@melanvee.com within 48 hours with photos and your order number and we'll put it right at no cost to you."],
+      ["How long do refunds take?", "Once your return passes inspection, refunds are issued to your original payment method, usually within 5–10 business days."],
       [
         "Can I return my order?",
         "Returns are accepted within 7 days of delivery on unopened, unworn pieces in original packaging.",
@@ -97,8 +111,18 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
     ],
   },
   {
+    title: "Collabs & Contact",
+    items: [
+      ["How can I contact you?", "Email customercare@melanvee.com or message us on WhatsApp using the green button."],
+      ["Can I collaborate with Melanvée?", "Yes, we'd love to hear from you. Use the Collab link in the menu to apply."],
+      ["Do you offer wholesale?", "Email customercare@melanvee.com with details of your business and we'll be in touch."],
+    ],
+  },
+  {
     title: "Payment & Currency",
     items: [
+      ["Which payment methods do you accept?", "Major debit and credit cards, Apple Pay, Klarna and Clearpay."],
+      ["Is my payment secure?", "Yes. Payments are processed through a secure, encrypted checkout."],
       [
         "Can I pay in instalments?",
         "Yes — Klarna and Clearpay are available at checkout.",
