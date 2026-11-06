@@ -11,14 +11,15 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "The story behind Melanvée — a textured hair house built for realism, softness, and the women who wear it.",
+          "The story behind Melanvée — textured hair made so women of colour can wear their own textures, beautifully blended.",
       },
       { property: "og:title", content: "About MELANVÉE" },
       {
         property: "og:description",
-        content: "A textured hair house built for realism, softness, and the women who wear it.",
+        content: "Why Becca started Melanvée: textured hair that looks like the hair we grow.",
       },
-      { property: "og:image", content: founder },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AboutPage,
@@ -37,7 +38,7 @@ function AboutPage() {
           <p className="text-lg text-muted-foreground leading-relaxed">
             {text(
               "about.intro",
-              "Melanvée was born in a London bathroom at 2am, with a wig that didn't fit and a woman who decided she'd had enough of pretending it did.",
+              "Melanvée started with a simple wish: that women of colour could wear hair that looks like the hair we actually grow — kinky, coily, curly, bouncy — and have it blend so naturally that it simply looks like you.",
             )}
           </p>
         </div>
@@ -56,55 +57,31 @@ function AboutPage() {
         <div className="space-y-6">
           <div className="eyebrow">{text("about.founder.eyebrow", "The founder's note")}</div>
           <h2 className="font-serif text-4xl text-espresso text-balance">
-            {text("about.founder.title", "A letter from Vée.")}
+            {text("about.founder.title", "A note from Becca.")}
           </h2>
           <div className="space-y-5 text-muted-foreground leading-relaxed">
             <p>
               {text(
                 "about.founder.paragraph1",
-                "I started Melanvée because I was tired. Tired of bulky installs. Tired of unrealistic hairlines. Tired of pretending heavy meant luxury. I wanted something that felt like my own hair — only easier.",
+                "For a long time, the hair I could buy never looked like the hair on my head. It was beautiful, but it wasn't mine, and you could tell. I wanted to wear my own texture, give my hair a rest, and still feel like myself.",
               )}
             </p>
             <p>
               {text(
                 "about.founder.paragraph2",
-                "So I made it. One unit at a time, in small batches, with women I trust. We don't drop weekly. We don't chase trends. We make hair that disappears into you.",
+                "So I started looking for hair that matched ours. U/V part wigs and half wigs that blend with your leave-out, crochet hair and bundles in textures we recognise. It took time to get right, and I'm still learning with every piece we send out.",
               )}
             </p>
             <p>
               {text(
                 "about.founder.paragraph3",
-                "If you wear Melanvée, you are the brand. Thank you for letting us be part of your week.",
+                "If you're wearing Melanvée, thank you for trusting me with your hair. I hope it feels like you on your best day.",
               )}
             </p>
             <p className="font-serif italic text-espresso text-lg pt-2">
-              {text("about.founder.signature", "— Vée, founder")}
+              {text("about.founder.signature", "— Becca, founder")}
             </p>
           </div>
-        </div>
-      </section>
-
-      <section className="bg-cocoa text-cream py-24">
-        <div className="container-luxe grid md:grid-cols-3 gap-12 text-center">
-          {[
-            [
-              text("about.stat.1.value", "2021"),
-              text("about.stat.1.description", "The year we started, in a London flat."),
-            ],
-            [
-              text("about.stat.2.value", "42"),
-              text("about.stat.2.description", "Countries we've shipped to since."),
-            ],
-            [
-              text("about.stat.3.value", "1 of 1"),
-              text("about.stat.3.description", "Every unit, finished by hand."),
-            ],
-          ].map(([k, v]) => (
-            <div key={k} className="space-y-3">
-              <div className="font-serif text-6xl text-blush">{k}</div>
-              <p className="text-cream/80 text-sm max-w-xs mx-auto">{v}</p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -112,21 +89,13 @@ function AboutPage() {
         <div className="space-y-6 order-2 lg:order-1">
           <div className="eyebrow">{text("about.beliefs.eyebrow", "What we believe")}</div>
           <h2 className="font-serif text-4xl md:text-5xl text-espresso text-balance">
-            {text("about.beliefs.title", "Luxury, quietly.")}
+            {text("about.beliefs.title", "What I believe.")}
           </h2>
-          <ul className="space-y-4 text-muted-foreground">
-            {[
-              text("about.belief.1", "Comfort is the new luxury."),
-              text("about.belief.2", "Realism is more interesting than perfection."),
-              text("about.belief.3", "Small batches mean better hair, kinder labour."),
-              text("about.belief.4", "The community is the brand."),
-            ].map((t) => (
-              <li key={t} className="flex gap-3">
-                <span className="text-cocoa">✦</span>
-                <span>{t}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="space-y-4 text-muted-foreground leading-relaxed border-l border-cocoa/30 pl-6">
+            <p>{text("about.belief.1", "I believe our hair deserves to be seen as it is. Not smoothed out, not swapped for something else.")}</p>
+            <p>{text("about.belief.2", "I believe a protective style should still look like you, so nobody needs to ask.")}</p>
+            <p>{text("about.belief.3", "And I believe you should be able to change it up — curly one week, stretched the next — without giving up your own texture.")}</p>
+          </div>
           <Link
             to="/shop"
             className="inline-block bg-cocoa text-cream px-8 py-4 text-[0.72rem] tracking-[0.28em] uppercase hover:bg-espresso transition"
