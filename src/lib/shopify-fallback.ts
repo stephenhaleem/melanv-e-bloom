@@ -27,7 +27,7 @@ import type {
 const COLLECTION_META: Record<Product["segment"], { handle: string; description: string; image: string }> = {
   "U/V Part Wigs": {
     handle: "u-v-part-wigs",
-    description: "Glueless U-part and V-part constructions that blend like leave-out.",
+    description: "U-part and V-part wigs that blend like leave-out.",
     image: colUpart,
   },
   "Half Wig": {

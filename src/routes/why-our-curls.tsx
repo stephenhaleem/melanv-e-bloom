@@ -6,8 +6,8 @@ import textureCloseup from "@/assets/texture-closeup.jpg";
 const ROWS = [
   ["Curl pattern", "Matched to real 3C–4C texture", "Generic “afro” curl, one size fits all"],
   ["Blend", "Designed to melt into your leave-out", "Shine and texture that give it away"],
-  ["Hairline", "Pre-plucked, natural density", "Over-dense, flat, needs hours of work"],
-  ["Weight", "Lightweight, breathable cap", "Heavy, hot, tiring by midday"],
+  ["Hairline", "Textures that match how our hair really grows", "Over-dense, flat, needs hours of work"],
+  ["Blend", "Made to blend with your own leave-out", "Sits on top of your hair and looks like a wig"],
   ["Longevity", "Holds pattern wash after wash", "Frizzes and tangles within weeks"],
   ["Ready to wear", "Blends with your own leave-out", "Needs a stylist before it's wearable"],
   ["Care", "Personal guidance from our concierge", "No help after checkout"],

@@ -538,27 +538,20 @@ function BeforeAfter() {
           )}
         </p>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5">
-        {[
-          image("image.home.customer.1", ugc1),
-          image("image.home.customer.2", ugc2),
-          image("image.home.customer.3", ugc3),
-          image("image.home.customer.4", ugc4),
-        ].map((src, i) => (
-          <div key={i} className="relative aspect-[3/4] overflow-hidden bg-sand group">
-            <img
-              src={src}
-              alt="Customer install"
-              loading="lazy"
-              width={900}
-              height={1100}
-              className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-[1200ms]"
-            />
-            <div className="absolute bottom-3 left-3 text-cream text-xs font-serif italic">
-              @melanvee.muse
+      <div className="overflow-hidden">
+        <div className="flex w-max marquee gap-3 md:gap-5">
+          {[...Array(4)].flatMap(() => [
+            image("image.home.customer.1", ugc1),
+            image("image.home.customer.2", ugc2),
+            image("image.home.customer.3", ugc3),
+            image("image.home.customer.4", ugc4),
+          ]).map((src, i) => (
+            <div key={i} className="relative aspect-[3/4] w-48 md:w-72 shrink-0 overflow-hidden bg-sand">
+              <img src={src} alt="Customer wearing Melanvée" loading="lazy" width={900} height={1100} className="w-full h-full object-cover" />
+              <div className="absolute bottom-3 left-3 text-cream text-xs font-serif italic">@melanvee.muse</div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
