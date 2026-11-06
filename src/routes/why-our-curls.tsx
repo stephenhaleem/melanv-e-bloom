@@ -9,7 +9,7 @@ const ROWS = [
   ["Hairline", "Pre-plucked, natural density", "Over-dense, flat, needs hours of work"],
   ["Weight", "Lightweight, breathable cap", "Heavy, hot, tiring by midday"],
   ["Longevity", "Holds pattern wash after wash", "Frizzes and tangles within weeks"],
-  ["Ready to wear", "Pre-styled, glueless, minutes to install", "Needs a stylist before it's wearable"],
+  ["Ready to wear", "Blends with your own leave-out", "Needs a stylist before it's wearable"],
   ["Care", "Personal guidance from our concierge", "No help after checkout"],
 ];
 

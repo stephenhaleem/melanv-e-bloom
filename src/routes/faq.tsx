@@ -58,7 +58,7 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
       ["What lengths are available?", "Our hair comes in 14 to 26 inches."],
       [
         "I'm a beginner. Is this for me?",
-        "Yes. Our units are pre-styled and glueless — most women install in minutes. Our concierge is happy to guide you.",
+        "Yes. U/V part and half wigs are some of the easiest styles to learn, and we are happy to guide you through your first install.",
       ],
     ],
   },

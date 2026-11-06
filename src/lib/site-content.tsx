@@ -43,19 +43,19 @@ export const SITE_COPY_FIELDS = {
   "home.value.1.description": {
     page: "Home",
     label: "Value 1 paragraph",
-    value: "HD lace and melted hairlines, made to disappear.",
+    value: "Textures matched to real hair, so the blend with your leave-out looks like you.",
   },
-  "home.value.2.title": { page: "Home", label: "Value 2 heading", value: "Lightweight comfort" },
+  "home.value.2.title": { page: "Home", label: "Value 2 heading", value: "Your texture, honoured" },
   "home.value.2.description": {
     page: "Home",
     label: "Value 2 paragraph",
-    value: "Built airy. Built to wear all day, every day.",
+    value: "Kinky, coily, curly and bouncy patterns that reflect the hair we actually grow.",
   },
   "home.value.3.title": { page: "Home", label: "Value 3 heading", value: "Beginner friendly" },
   "home.value.3.description": {
     page: "Home",
     label: "Value 3 paragraph",
-    value: "Pre-styled, pre-plucked, ready out of the box.",
+    value: "Simple constructions — U/V part, half wig, crochet and bundles — easy to learn and wear.",
   },
   "home.value.4.title": { page: "Home", label: "Value 4 heading", value: "Protective styling" },
   "home.value.4.description": {
@@ -63,17 +63,17 @@ export const SITE_COPY_FIELDS = {
     label: "Value 4 paragraph",
     value: "Looks like your own hair while you grow your own.",
   },
-  "home.value.5.title": { page: "Home", label: "Value 5 heading", value: "Effortless installs" },
+  "home.value.5.title": { page: "Home", label: "Value 5 heading", value: "Freedom to switch" },
   "home.value.5.description": {
     page: "Home",
     label: "Value 5 paragraph",
-    value: "Glueless. Adjustable. On in under 5 minutes.",
+    value: "Wear it curly, stretched or straightened — style it your way, week to week.",
   },
-  "home.value.6.title": { page: "Home", label: "Value 6 heading", value: "Premium quality" },
+  "home.value.6.title": { page: "Home", label: "Value 6 heading", value: "Made with care" },
   "home.value.6.description": {
     page: "Home",
     label: "Value 6 paragraph",
-    value: "Sourced, wefted and styled in small batches.",
+    value: "Every piece is checked by us before it leaves, so what arrives is what you saw.",
   },
   "home.bestsellers.eyebrow": { page: "Home", label: "Bestsellers eyebrow", value: "Bestsellers" },
   "home.bestsellers.title": {
@@ -176,12 +176,12 @@ export const SITE_COPY_FIELDS = {
   "home.how-it-works.step2.title": {
     page: "Home",
     label: "Step 2 heading",
-    value: "Install effortlessly",
+    value: "Blend with your leave-out",
   },
   "home.how-it-works.step2.description": {
     page: "Home",
     label: "Step 2 paragraph",
-    value: "Glueless, adjustable, pre-styled. Ready in under five minutes.",
+    value: "Leave out a little of your own hair and blend it with the texture you chose.",
   },
   "home.how-it-works.step3.title": {
     page: "Home",
@@ -191,7 +191,7 @@ export const SITE_COPY_FIELDS = {
   "home.how-it-works.step3.description": {
     page: "Home",
     label: "Step 3 paragraph",
-    value: "Melted HD lace and a feather edge that disappears into the skin.",
+    value: "Because the texture matches yours, the finish looks like your own hair.",
   },
   "home.how-it-works.step4.title": { page: "Home", label: "Step 4 heading", value: "Go." },
   "home.how-it-works.step4.description": {
@@ -226,7 +226,7 @@ export const SITE_COPY_FIELDS = {
     page: "Home",
     label: "Homepage FAQ 2 answer",
     value:
-      "Yes — every wig ships pre-plucked, pre-styled and glueless. Most customers install in under 5 minutes.",
+      "Yes. Our U/V part and half wigs are simple to wear, and we are happy to talk you through your first install.",
   },
   "home.faq.q3": {
     page: "Home",
@@ -481,7 +481,7 @@ export const SITE_COPY_FIELDS = {
   "faq.group.5.a1": {
     page: "FAQ",
     label: "FAQ texture answer",
-    value: "Our glueless U-part and pre-styled curl units are designed for first installs.",
+    value: "Our U/V part and half wigs are simple to wear, even for a first install.",
   },
   "faq.group.5.q2": {
     page: "FAQ",
