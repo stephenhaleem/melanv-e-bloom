@@ -19,6 +19,7 @@ import { Route as HairCareRouteImport } from './routes/hair-care'
 import { Route as PoliciesRouteImport } from './routes/policies'
 import { Route as TexturesRouteImport } from './routes/textures'
 import { Route as WhyOurCurlsRouteImport } from './routes/why-our-curls'
+import { Route as WhyWeExistRouteImport } from './routes/why-we-exist'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
 
@@ -72,6 +73,11 @@ const WhyOurCurlsRoute = WhyOurCurlsRouteImport.update({
   path: '/why-our-curls',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WhyWeExistRoute = WhyWeExistRouteImport.update({
+  id: '/why-we-exist',
+  path: '/why-we-exist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopIndexRoute = ShopIndexRouteImport.update({
   id: '/shop/',
   path: '/shop/',
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/policies': typeof PoliciesRoute
   '/textures': typeof TexturesRoute
   '/why-our-curls': typeof WhyOurCurlsRoute
+  '/why-we-exist': typeof WhyWeExistRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
 }
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/policies': typeof PoliciesRoute
   '/textures': typeof TexturesRoute
   '/why-our-curls': typeof WhyOurCurlsRoute
+  '/why-we-exist': typeof WhyWeExistRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop': typeof ShopIndexRoute
 }
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/policies': typeof PoliciesRoute
   '/textures': typeof TexturesRoute
   '/why-our-curls': typeof WhyOurCurlsRoute
+  '/why-we-exist': typeof WhyWeExistRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
 }
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/policies'
     | '/textures'
     | '/why-our-curls'
+    | '/why-we-exist'
     | '/shop/$slug'
     | '/shop/'
   fileRoutesByTo: FileRoutesByTo
@@ -153,6 +163,7 @@ export interface FileRouteTypes {
     | '/policies'
     | '/textures'
     | '/why-our-curls'
+    | '/why-we-exist'
     | '/shop/$slug'
     | '/shop'
   id:
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '/policies'
     | '/textures'
     | '/why-our-curls'
+    | '/why-we-exist'
     | '/shop/$slug'
     | '/shop/'
   fileRoutesById: FileRoutesById
@@ -182,6 +194,7 @@ export interface RootRouteChildren {
   PoliciesRoute: typeof PoliciesRoute
   TexturesRoute: typeof TexturesRoute
   WhyOurCurlsRoute: typeof WhyOurCurlsRoute
+  WhyWeExistRoute: typeof WhyWeExistRoute
   ShopSlugRoute: typeof ShopSlugRoute
   ShopIndexRoute: typeof ShopIndexRoute
 }
@@ -258,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhyOurCurlsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/why-we-exist': {
+      id: '/why-we-exist'
+      path: '/why-we-exist'
+      fullPath: '/why-we-exist'
+      preLoaderRoute: typeof WhyWeExistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop/': {
       id: '/shop/'
       path: '/shop'
@@ -286,6 +306,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoliciesRoute: PoliciesRoute,
   TexturesRoute: TexturesRoute,
   WhyOurCurlsRoute: WhyOurCurlsRoute,
+  WhyWeExistRoute: WhyWeExistRoute,
   ShopSlugRoute: ShopSlugRoute,
   ShopIndexRoute: ShopIndexRoute,
 }

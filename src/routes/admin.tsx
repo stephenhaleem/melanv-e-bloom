@@ -6,6 +6,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { SITE_COPY_FIELDS, SITE_IMAGE_FIELDS, useSiteContent } from "@/lib/site-content";
 
 export const Route = createFileRoute("/admin")({
+  head: () => ({ meta: [
+    { title: "Content Studio — MELANVÉE" },
+    { name: "description", content: "Manage MELANVÉE site copy and imagery." },
+    { property: "og:title", content: "Content Studio — MELANVÉE" },
+    { property: "og:description", content: "MELANVÉE site content management." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+    { name: "robots", content: "noindex" },
+  ] }),
   component: AdminPage,
 });
 

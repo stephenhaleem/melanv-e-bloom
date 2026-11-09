@@ -114,14 +114,16 @@ export function Footer() {
           <FooterCol
             title={text("footer.house.title", "House")}
             labels={[
-              "footer.house.1",
+              "nav.whyWeExist",
+              "nav.ourStory",
               "footer.house.2",
               "footer.house.3",
               "footer.house.4",
               "footer.house.5",
             ]}
             links={[
-              ["About Us", "/about"],
+              ["Why We Exist", "/why-we-exist"],
+              ["Our Story", "/about"],
               ["Collab With Us", COLLAB_URL],
               ["Contact", "/contact"],
               ["Privacy Policy", "/policies#privacy"],

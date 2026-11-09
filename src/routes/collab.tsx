@@ -14,6 +14,8 @@ export const Route = createFileRoute("/collab")({
           "Apply to collaborate with Melanvée. Creators, stylists, brands and muses — we'd love to hear from you.",
       },
       { property: "og:title", content: "Collab with MELANVÉE" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
         content: "Creator, stylist and brand partnerships with Melanvée.",

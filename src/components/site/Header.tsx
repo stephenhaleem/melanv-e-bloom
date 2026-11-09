@@ -14,7 +14,8 @@ const DESKTOP_LEFT = [
 ] as const;
 
 const DESKTOP_RIGHT = [
-  { to: "/about", label: "About" },
+  { to: "/why-we-exist", label: "Why We Exist" },
+  { to: "/about", label: "Our Story" },
   { to: "/faq", label: "FAQ" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -45,10 +46,10 @@ export function Header() {
       </div>
 
       <div className="container-luxe flex h-[72px] items-center justify-between gap-4">
-        <nav className="hidden flex-1 items-center gap-8 text-sm text-cocoa md:flex">
+        <nav className="hidden flex-1 items-center gap-5 text-sm text-cocoa min-[1280px]:flex">
           {DESKTOP_LEFT.map((item) => (
             <Link key={item.to} to={item.to} className="transition-colors hover:text-espresso">
-              {item.to === "/" ? text("nav.home", item.label) : text("nav.shop", item.label)}
+               {item.to === "/" ? text("nav.home", item.label) : item.to === "/shop" ? text("nav.shop", item.label) : item.label}
             </Link>
           ))}
         </nav>
@@ -56,7 +57,7 @@ export function Header() {
         <button
           type="button"
           onClick={() => setOpen((current) => !current)}
-          className="text-cocoa md:hidden"
+          className="text-cocoa min-[1280px]:hidden"
           aria-label={open ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={open}
           aria-controls="mobile-navigation"
@@ -73,10 +74,10 @@ export function Header() {
         </Link>
 
         <div className="flex flex-1 items-center justify-end gap-5">
-          <nav className="hidden items-center gap-8 text-sm text-cocoa md:flex">
+          <nav className="hidden items-center gap-5 whitespace-nowrap text-sm text-cocoa min-[1280px]:flex">
             {DESKTOP_RIGHT.map((item) => (
               <Link key={item.to} to={item.to} className="transition-colors hover:text-espresso">
-                {item.to === "/about" ? text("nav.about", item.label) : item.to === "/faq" ? "FAQ" : text("nav.contact", item.label)}
+                {item.to === "/contact" ? text("nav.contact", item.label) : item.label}
               </Link>
             ))}
             <a
@@ -103,7 +104,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div id="mobile-navigation" className="border-t border-border/60 bg-ivory md:hidden">
+        <div id="mobile-navigation" className="max-h-[calc(100dvh-108px)] overflow-y-auto border-t border-border/60 bg-ivory min-[1280px]:hidden">
           <nav className="container-luxe flex flex-col gap-3 py-4 text-[0.85rem] uppercase tracking-[0.18em] text-cocoa">
             <Link to="/" onClick={closeMenu} className="border-b border-border/40 py-2">
               {text("nav.home", "Home")}
@@ -111,8 +112,11 @@ export function Header() {
             <Link to="/shop" onClick={closeMenu} className="border-b border-border/40 py-2">
               {text("nav.shop", "Shop")}
             </Link>
+            <Link to="/why-we-exist" onClick={closeMenu} className="border-b border-border/40 py-2">
+              Why We Exist
+            </Link>
             <Link to="/about" onClick={closeMenu} className="border-b border-border/40 py-2">
-              {text("nav.about", "About")}
+              Our Story
             </Link>
             <a
               href={COLLAB_URL}
