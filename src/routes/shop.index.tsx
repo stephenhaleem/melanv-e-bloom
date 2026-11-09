@@ -22,6 +22,8 @@ export const Route = createFileRoute("/shop/")({
         content: "Shop MELANVÉE — U/V Part Wigs, Half Wigs, Crochet, Layered Wigs and Hot Tools.",
       },
       { property: "og:title", content: "Shop MELANVÉE" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
         content: "U/V Part Wigs, Half Wigs, Crochet, Layered Wigs and Hot Tools.",

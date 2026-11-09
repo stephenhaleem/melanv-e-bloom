@@ -13,6 +13,8 @@ export const Route = createFileRoute("/contact")({
         content: "Reach MELANVÉE. WhatsApp us, email us, or send a message — we read every one.",
       },
       { property: "og:title", content: "Contact MELANVÉE" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         property: "og:description",
         content: "Reach MELANVÉE. WhatsApp us, email us, or send a message — we read every one.",
