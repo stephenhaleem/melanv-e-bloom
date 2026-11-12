@@ -26,7 +26,7 @@ function MissionPage() {
       <section className="bg-burgundy py-16 text-cream md:py-24">
         <div className="container-luxe text-center">
           <p className="mb-6 text-xs uppercase tracking-[0.2em]">MELANVÉE</p>
-          <h1 className="font-serif text-5xl md:text-7xl">Why we exist</h1>
+          <h1 className="font-display text-5xl md:text-7xl">Why we exist</h1>
           <p className="mx-auto mt-8 max-w-2xl font-serif text-2xl leading-snug md:text-4xl">Change your look.<br /><em>Not who you are.</em></p>
         </div>
       </section>
@@ -51,7 +51,7 @@ function MissionPage() {
         <div className="container-luxe">
           <p className="mx-auto max-w-3xl font-serif text-3xl leading-snug text-burgundy md:text-5xl">The texture you love.<br /><em>The freedom to wear it your way.</em></p>
           <Button asChild className="mt-8 rounded-none px-8">
-            <Link to="/textures">Find your texture <ArrowRight aria-hidden="true" /></Link>
+            <Link to="/shop" search={{ view: "texture" }}>Find your texture <ArrowRight aria-hidden="true" /></Link>
           </Button>
         </div>
       </section>

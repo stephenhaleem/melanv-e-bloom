@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { HAIR_QUANTITIES } from "@/lib/hair-quantity";
 import { useState } from "react";
 
 export const Route = createFileRoute("/faq")({
@@ -53,12 +55,12 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
       ["What products do you sell?", "U/V part wigs, half wigs, crochet hair and bundles, plus hot tools for styling."],
       ["Will the hair blend with my natural hair?", "That's the whole idea. Our textures are chosen to look like natural textured hair, so they blend with your leave-out."],
       ["How much leave-out do I need?", "For U/V part wigs, a small section at your parting. For half wigs, your front hairline and edges."],
-      ["How many packs or bundles do I need?", "For a full look most people use 3 bundles, or 4 for longer lengths. Message us and we'll help you work it out."],
+      ["How many packs or bundles do I need?", `For crochet hair, you need ${HAIR_QUANTITIES.crochet.standard} packs for a full look, or ${HAIR_QUANTITIES.crochet.extra} for extra fullness. For bundles, choose ${HAIR_QUANTITIES.bundles.standard} or ${HAIR_QUANTITIES.bundles.extra}. Message us if you would like help choosing.`],
       ["Can I add a special request to my order?", "Yes. Open your bag and use the order note box before checkout. We read every note before packing."],
       ["Can I see the hair before I buy?", "Message us on WhatsApp and we can share extra photos or videos of the texture."],
       [
         "Which texture should I choose?",
-        "Pick the texture closest to your natural hair for the most seamless blend. Our Shop by Texture page groups everything into Curly, Straight, Bouncy and Coily.",
+        "Pick the texture closest to your natural hair for the most seamless blend. In Shop, choose Shop by Texture to browse into Curly, Straight, Bouncy and Coily.",
       ],
       [
         "What's the difference between a U/V part wig and a half wig?",
@@ -139,10 +141,10 @@ function FAQPage() {
   return (
     <SiteLayout>
       <section className="container-luxe py-20 md:py-28">
-        <div className="max-w-2xl mx-auto text-center space-y-5 mb-16">
+        <div className="max-w-3xl mx-auto space-y-5 mb-16 border-b border-border pb-10">
           <div className="eyebrow">Answered</div>
-          <h1 className="font-serif text-5xl md:text-6xl text-espresso text-balance">
-            Every quiet question.
+          <h1 className="font-display text-5xl md:text-6xl text-espresso text-balance">
+            Choosing, caring, wearing.
           </h1>
           <p className="text-muted-foreground">
             Still need a human?{" "}
@@ -154,7 +156,7 @@ function FAQPage() {
         </div>
 
         <div className="max-w-3xl mx-auto space-y-14">
-          {GROUPS.map((g) => (
+          {[GROUPS[1], GROUPS[0], ...GROUPS.slice(2)].map((g) => (
             <div key={g.title}>
               <h2 className="font-serif text-2xl text-espresso mb-4 pb-3 border-b border-cocoa/20">
                 {g.title}
@@ -176,18 +178,19 @@ function Item({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="py-5">
-      <button
+      <Button variant="ghost"
+        aria-expanded={open}
         onClick={() => setOpen(!open)}
-        className="w-full flex justify-between items-center gap-6 text-left"
+        className="h-auto w-full whitespace-normal px-0 py-0 flex justify-between items-center gap-6 text-left hover:bg-transparent"
       >
         <span className="font-serif text-lg text-espresso">{q}</span>
         <ChevronDown
           size={18}
           className={`text-cocoa shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
         />
-      </button>
+      </Button>
       <div
-        className={`overflow-hidden transition-all duration-500 ${open ? "max-h-60 mt-3 opacity-100" : "max-h-0 opacity-0"}`}
+        className={`overflow-hidden transition-all duration-500 ${open ? "max-h-[600px] mt-3 opacity-100" : "max-h-0 opacity-0"}`}
       >
         <p className="text-muted-foreground text-sm leading-relaxed">{a}</p>
       </div>

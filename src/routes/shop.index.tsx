@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
-import { Heart, ArrowRight } from "lucide-react";
-import { useRef } from "react";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { TEXTURE_GROUPS } from "@/lib/shopping-groups";
+import { z } from "zod";
 import { Price } from "@/lib/currency";
 import {
   getCollectionsWithProducts,
@@ -13,6 +15,7 @@ import {
 import { useSiteContent } from "@/lib/site-content";
 
 export const Route = createFileRoute("/shop/")({
+  validateSearch: z.object({ view: z.enum(["style", "texture"]).optional().default("style"), group: z.string().optional() }),
   loader: () => getCollectionsWithProducts(),
   head: () => ({
     meta: [
@@ -37,18 +40,19 @@ function ShopPage() {
   const { text } = useSiteContent();
   const loadedCollections: ShopifyCollectionWithProducts[] = Route.useLoaderData();
   const collections = loadedCollections.filter((collection) => collection.products.length > 0);
-  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+  const { view, group } = Route.useSearch();
+  const navigate = Route.useNavigate();
   const products = Array.from(
     new Map(
       collections.flatMap((collection) => collection.products).map((p) => [p.id, p]),
     ).values(),
   );
 
-  const scrollTo = (handle: string) => {
-    sectionRefs.current[handle]?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  const spotlight = products.slice(0, 3);
+  const groups = view === "texture"
+    ? TEXTURE_GROUPS.map((texture) => ({ id: texture.handle, handle: texture.handle, title: texture.title, description: "", products: products.filter((product) => product.productType !== "Hot Tools" && texture.match.some((match) => product.title.toLowerCase().includes(match))) }))
+    : collections;
+  const visibleGroups = group ? groups.filter((item) => item.handle === group || item.title === group) : groups;
+  const spotlight = products.filter((product) => /zuri|lielle|isi bouncy/i.test(product.title)).slice(0, 3);
 
   return (
     <SiteLayout>
@@ -56,37 +60,38 @@ function ShopPage() {
       <section className="bg-cream py-16 md:py-20">
         <div className="container-luxe text-center max-w-2xl mx-auto space-y-4">
           <div className="eyebrow">{text("shop.eyebrow", "The Collection")}</div>
-          <h1 className="font-serif text-5xl md:text-6xl text-espresso text-balance">
-            {text("shop.title", "The house, in full.")}
+          <h1 className="font-display text-5xl md:text-6xl text-espresso text-balance">
+            {text("shop.title", "Shop MELANVÉE")}
           </h1>
           <p className="text-muted-foreground">
             {text(
               "shop.description",
-              "Hand-finished, small batch, worn by women who don't repeat themselves.",
+              "Your texture. Your style. Your way.",
             )}
           </p>
         </div>
 
-        {/* Segment quick-jump */}
-        <div className="container-luxe mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3 text-[0.7rem] tracking-[0.25em] uppercase">
-          {collections.map((collection) => (
-            <button
-              key={collection.id}
-              onClick={() => scrollTo(collection.handle)}
-              className="text-cocoa hover:text-espresso border-b border-transparent hover:border-cocoa pb-1 transition"
-            >
-              {collection.title}
-            </button>
+        <div className="container-luxe mt-9 flex justify-center gap-6" role="tablist" aria-label="Shop by">
+          {(["style", "texture"] as const).map((mode) => (
+            <Button key={mode} variant="ghost" role="tab" aria-selected={view === mode}
+              onClick={() => navigate({ search: { view: mode } })}
+              className={`rounded-none border-b-2 px-2 text-sm ${view === mode ? "border-burgundy text-burgundy" : "border-transparent text-muted-foreground"}`}>
+              Shop by {mode === "style" ? "Style" : "Texture"}
+            </Button>
           ))}
+        </div>
+        <div className="container-luxe mt-6 flex flex-wrap justify-center gap-2">
+          <Button variant={!group ? "default" : "ghost"} className="rounded-none text-xs" onClick={() => navigate({ search: { view } })}>All {view === "style" ? "styles" : "textures"}</Button>
+          {groups.map((item) => <Button key={item.handle} variant={group === item.handle || group === item.title ? "default" : "ghost"} className="rounded-none text-xs" onClick={() => navigate({ search: { view, group: item.handle } })}>{item.title}</Button>)}
         </div>
       </section>
 
       {/* SPOTLIGHT — Back to Work */}
-      <section className="bg-cocoa text-cream">
+      {!group && view === "style" && spotlight.length > 0 && <section className="bg-cocoa text-cream">
         <div className="container-luxe py-16 md:py-24 grid md:grid-cols-12 gap-10 items-center">
           <div className="md:col-span-5 space-y-6">
             <div className="eyebrow text-blush">
-              {text("shop.spotlight.eyebrow", "Autumn Drop · No.05")}
+              {text("shop.spotlight.eyebrow", "The new collection")}
             </div>
             <h2 className="font-serif text-4xl md:text-5xl text-balance leading-[1.05]">
               {text("home.shop-spotlight.title", "The Back to Work Edit.")}
@@ -128,20 +133,17 @@ function ShopPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* SEGMENTS */}
-      {collections.map((collection, idx) => {
+      {visibleGroups.map((collection, idx) => {
         const items = collection.products;
-        if (items.length === 0) return null;
+
         const isDark = idx % 2 === 1;
         return (
           <section
             key={collection.id}
             id={collection.handle}
-            ref={(el: HTMLElement | null) => {
-              sectionRefs.current[collection.handle] = el;
-            }}
             className={`scroll-mt-24 ${isDark ? "bg-cream" : "bg-ivory"}`}
           >
             <div className="container-luxe py-16 md:py-24">
@@ -161,6 +163,7 @@ function ShopPage() {
                 </div>
               </div>
 
+              {items.length === 0 && <p className="text-muted-foreground">New pieces arriving soon.</p>}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                 {items.map((p) => (
                   <ProductCard key={p.handle} product={p} />
@@ -213,13 +216,6 @@ function ProductCard({ product: p }: { product: ShopifyProduct }) {
           loading="lazy"
           className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-[1200ms]"
         />
-        <button
-          aria-label="Wishlist"
-          onClick={(e) => e.preventDefault()}
-          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-ivory/90 backdrop-blur flex items-center justify-center text-cocoa hover:bg-cocoa hover:text-cream transition"
-        >
-          <Heart size={14} />
-        </button>
         <span className="absolute inset-x-3 bottom-3 bg-cocoa text-cream py-3 text-center text-[0.65rem] tracking-[0.25em] uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
           View details
         </span>

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { Check, Minus } from "lucide-react";
 import { SiteLayout } from "@/components/site/Layout";
 import textureCloseup from "@/assets/texture-closeup.jpg";
@@ -14,6 +14,7 @@ const ROWS = [
 ];
 
 export const Route = createFileRoute("/why-our-curls")({
+  beforeLoad: () => { throw redirect({ to: "/why-we-exist" }); },
   head: () => ({
     meta: [
       { title: "Why Our Curls Blend — MELANVÉE" },
@@ -96,7 +97,7 @@ function WhyPage() {
           >
             Shop textured hair
           </Link>
-          <Link to="/textures" className="border-b border-burgundy pb-0.5 text-sm text-burgundy">
+          <Link to="/shop" search={{ view: "texture" }} className="border-b border-burgundy pb-0.5 text-sm text-burgundy">
             Find your texture
           </Link>
         </div>

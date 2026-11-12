@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/Layout";
 import { Price } from "@/lib/currency";
 import { getProductImage, getProducts, getStartingPrice } from "@/lib/shopify";
@@ -31,6 +31,7 @@ const TEXTURES = [
 ];
 
 export const Route = createFileRoute("/textures")({
+  beforeLoad: () => { throw redirect({ to: "/shop", search: { view: "texture" } }); },
   loader: async () => ({ products: await getProducts(50) }),
   head: () => ({
     meta: [

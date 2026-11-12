@@ -35,6 +35,9 @@ import ugc1 from "@/assets/ugc-1.jpg";
 import ugc2 from "@/assets/ugc-2.jpg";
 import ugc3 from "@/assets/ugc-3.jpg";
 import ugc4 from "@/assets/ugc-4.jpg";
+import { TextureFilm } from "@/components/site/TextureFilm";
+import { Button } from "@/components/ui/button";
+import { HAIR_QUANTITIES } from "@/lib/hair-quantity";
 import { useSiteContent } from "@/lib/site-content";
 
 export const Route = createFileRoute("/")({
@@ -85,7 +88,6 @@ function HomePage() {
       <Bestsellers items={bestsellers} />
       <Marquee />
       <WhyMelanvee />
-      <FilmSection />
       <BeforeAfter />
       <Community />
       <Testimonials />
@@ -100,59 +102,18 @@ function HomePage() {
 function Hero() {
   const { image } = useSiteContent();
   return (
-    <section className="bg-ivory">
-      <div className="container-luxe pt-8 pb-16 md:pt-12 md:pb-24 text-center">
-        <h1 className="font-serif text-[3.2rem] leading-none tracking-[0.18em] text-burgundy sm:text-7xl md:text-[7.5rem] md:tracking-[0.22em] fade-up">
-          MELANVÉE
-        </h1>
-        <div className="mx-auto mt-4 mb-8 flex items-center justify-center gap-3 md:mb-10">
-          <span className="h-px w-10 bg-burgundy/40" />
-          <span className="text-[0.6rem] tracking-[0.4em] uppercase text-burgundy/70">London</span>
-          <span className="h-px w-10 bg-burgundy/40" />
-        </div>
-
-        <div className="mx-auto aspect-[4/5] w-full max-w-5xl overflow-hidden bg-sand md:aspect-[16/9]">
-          <img
-            src={image("image.home.hero", hero)}
-            alt="A woman wearing a Melanvée textured wig"
-            className="h-full w-full object-cover"
-            width={1600}
-            height={1280}
-            fetchPriority="high"
-          />
-        </div>
-
-        <div className="mx-auto mt-12 max-w-2xl md:mt-16">
-          <p className="text-[0.7rem] font-medium tracking-[0.38em] uppercase text-burgundy md:text-xs">
-            Textured hair, considered differently
-          </p>
-          <h2 className="mt-6 font-serif text-4xl leading-[1.08] text-espresso text-balance md:text-6xl">
-            The texture you love.{" "}
-            <em className="text-burgundy">The freedom to wear it your way.</em>
-          </h2>
-          <p className="mx-auto mt-6 max-w-lg text-[0.95rem] leading-[1.85] text-muted-foreground">
-            Discover textured wigs and protective styles designed for natural-looking blends,
-            versatile styling and more freedom in your hair routine.
-          </p>
-          <div className="mt-10 flex flex-col items-center gap-6">
-            <Link
-              to="/shop"
-              className="w-full max-w-sm bg-burgundy px-10 py-5 text-[0.7rem] uppercase tracking-[0.32em] text-cream shadow-[0_20px_40px_-20px_var(--burgundy)] transition-colors duration-500 hover:bg-burgundy-deep"
-            >
-              Shop textured hair
-            </Link>
-            <Link
-              to="/textures"
-              className="group inline-flex items-center gap-2 text-sm text-espresso"
-            >
-              Not sure where to start?{" "}
-              <span className="border-b border-burgundy pb-0.5 text-burgundy">Find your style</span>
-              <ArrowRight
-                size={15}
-                className="text-burgundy transition-transform group-hover:translate-x-1"
-              />
-            </Link>
-          </div>
+    <section className="film-opening relative isolate overflow-hidden bg-burgundy-deep text-cream">
+      <TextureFilm poster={image("image.home.hero", hero)} />
+      <div className="container-luxe relative z-[1] flex min-h-[inherit] flex-col items-center justify-between py-6 text-center md:py-12 pointer-events-none">
+        <h1 className="film-title">MELANVÉE</h1>
+        <div className="mx-auto mt-8 max-w-2xl pointer-events-auto md:mt-24">
+          <p className="text-xs uppercase font-medium">Textured hair, considered differently.</p>
+          <h2 className="mt-4 font-serif text-3xl leading-tight text-balance md:text-5xl">The texture you love.<br /><em>The freedom to wear it your way.</em></h2>
+          <p className="mx-auto mt-5 max-w-lg text-sm leading-relaxed text-cream/90">Discover textured wigs and protective styles designed for natural-looking blends, versatile styling and more freedom in your hair routine.</p>
+          <Button asChild className="mt-7 h-12 rounded-none bg-burgundy px-8 text-xs uppercase text-cream hover:bg-burgundy-light">
+            <Link to="/shop">Shop textured hair <ArrowRight /></Link>
+          </Button>
+          <Link to="/shop" search={{ view: "style" }} className="mt-5 flex items-center justify-center gap-2 text-sm text-cream">Not sure where to start? Find your style <ArrowRight size={15} /></Link>
         </div>
       </div>
     </section>
@@ -284,7 +245,7 @@ function ValueProps() {
 const HOME_COLLECTIONS = [
   { title: "U/V Part Wigs", note: "Seamless leave-out", img: colUpart },
   { title: "Half Wigs", note: "Half the install", img: colTextured },
-  { title: "Crochet Hair", note: "Protective, premium", img: textureCloseup },
+  { title: "Crochet Hair", note: "Your protective style", img: textureCloseup },
   { title: "4C Edges Wigs", note: "Edges that match yours", img: colPonytail },
   { title: "Bundles", note: "Raw textured weft", img: colBundles },
 ];
@@ -301,7 +262,7 @@ function Collections() {
         </div>
         <div className="grid grid-cols-2 gap-3 md:gap-6 lg:grid-cols-5">
           {HOME_COLLECTIONS.map((c) => (
-            <Link to="/shop" key={c.title} className="group block">
+            <Link to="/shop" search={{ view: "style", group: c.title }} key={c.title} className="group block">
               <div className="aspect-[4/5] overflow-hidden bg-sand">
                 <img
                   src={c.img}
@@ -734,7 +695,7 @@ function FAQSection() {
   const faqs = Array.from({ length: 6 }, (_, index) => {
     const number = index + 1;
     return [text(`home.faq.q${number}`, ""), text(`home.faq.a${number}`, "")] as [string, string];
-  }).filter(([question]) => question);
+  }).filter(([question]) => question).map(([question, answer]) => [question, /packs|bundles/i.test(question) ? `For crochet hair, choose ${HAIR_QUANTITIES.crochet.standard} packs, or ${HAIR_QUANTITIES.crochet.extra} for extra fullness. For bundles, choose ${HAIR_QUANTITIES.bundles.standard} or ${HAIR_QUANTITIES.bundles.extra}.` : answer] as [string, string]);
   return (
     <section className="container-luxe py-24 md:py-32">
       <div className="grid md:grid-cols-3 gap-12">
