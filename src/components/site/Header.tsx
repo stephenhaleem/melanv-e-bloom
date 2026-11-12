@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, ShoppingBag, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { CurrencySwitcher } from "./CurrencySwitcher";
 import { useCart } from "@/lib/cart";
 import { COLLAB_URL } from "@/lib/site";
@@ -9,8 +10,6 @@ import { useSiteContent } from "@/lib/site-content";
 const DESKTOP_LEFT = [
   { to: "/", label: "Home" },
   { to: "/shop", label: "Shop" },
-  { to: "/textures", label: "Shop by Texture" },
-  { to: "/why-our-curls", label: "Why Our Curls Blend" },
 ] as const;
 
 const DESKTOP_RIGHT = [
@@ -46,7 +45,7 @@ export function Header() {
       </div>
 
       <div className="container-luxe flex h-[72px] items-center justify-between gap-4">
-        <nav className="hidden flex-1 items-center gap-5 text-sm text-cocoa min-[1280px]:flex">
+        <nav className="hidden flex-1 items-center gap-5 text-sm text-cocoa min-[1100px]:flex">
           {DESKTOP_LEFT.map((item) => (
             <Link key={item.to} to={item.to} className="transition-colors hover:text-espresso">
                {item.to === "/" ? text("nav.home", item.label) : item.to === "/shop" ? text("nav.shop", item.label) : item.label}
@@ -54,27 +53,27 @@ export function Header() {
           ))}
         </nav>
 
-        <button
+        <Button variant="ghost" size="icon"
           type="button"
           onClick={() => setOpen((current) => !current)}
-          className="text-cocoa min-[1280px]:hidden"
+          className="text-cocoa min-[1100px]:hidden"
           aria-label={open ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={open}
           aria-controls="mobile-navigation"
         >
           {open ? <X size={21} /> : <Menu size={21} />}
-        </button>
+        </Button>
 
         <Link
           to="/"
           onClick={closeMenu}
-          className="font-serif text-xl tracking-[0.26em] text-cocoa sm:text-2xl md:text-3xl"
+          className="font-display text-xl text-cocoa sm:text-2xl md:text-3xl"
         >
           MELANVÉE
         </Link>
 
         <div className="flex flex-1 items-center justify-end gap-5">
-          <nav className="hidden items-center gap-5 whitespace-nowrap text-sm text-cocoa min-[1280px]:flex">
+          <nav className="hidden items-center gap-5 whitespace-nowrap text-sm text-cocoa min-[1100px]:flex">
             {DESKTOP_RIGHT.map((item) => (
               <Link key={item.to} to={item.to} className="transition-colors hover:text-espresso">
                 {item.to === "/contact" ? text("nav.contact", item.label) : item.label}
@@ -89,7 +88,7 @@ export function Header() {
               {text("nav.collab", "Collab")}
             </a>
           </nav>
-          <button
+          <Button variant="ghost" size="icon"
             type="button"
             onClick={() => setCartOpen(true)}
             aria-label={`Bag, ${count} ${count === 1 ? "item" : "items"}`}
@@ -99,12 +98,12 @@ export function Header() {
             <span className="absolute -right-2 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-cocoa text-[0.6rem] text-cream">
               {count}
             </span>
-          </button>
+          </Button>
         </div>
       </div>
 
       {open && (
-        <div id="mobile-navigation" className="max-h-[calc(100dvh-108px)] overflow-y-auto border-t border-border/60 bg-ivory min-[1280px]:hidden">
+        <div id="mobile-navigation" className="max-h-[calc(100dvh-108px)] overflow-y-auto border-t border-border/60 bg-ivory min-[1100px]:hidden">
           <nav className="container-luxe flex flex-col gap-3 py-4 text-[0.85rem] uppercase tracking-[0.18em] text-cocoa">
             <Link to="/" onClick={closeMenu} className="border-b border-border/40 py-2">
               {text("nav.home", "Home")}
@@ -127,12 +126,6 @@ export function Header() {
             >
               {text("nav.collab", "Collab")}
             </a>
-            <Link to="/textures" onClick={closeMenu} className="border-b border-border/40 py-2">
-              Shop by Texture
-            </Link>
-            <Link to="/why-our-curls" onClick={closeMenu} className="border-b border-border/40 py-2">
-              Why Our Curls Blend
-            </Link>
             <Link to="/faq" onClick={closeMenu} className="border-b border-border/40 py-2">
               FAQ
             </Link>
