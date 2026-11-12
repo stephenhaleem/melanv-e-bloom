@@ -194,7 +194,7 @@
 .film-title { font-family: var(--font-display); font-size: 86px; line-height: 1; }
 :root { --film-shade: linear-gradient(180deg, color-mix(in oklab, var(--burgundy-deep) 22%, transparent), color-mix(in oklab, var(--burgundy-deep) 12%, transparent) 35%, color-mix(in oklab, var(--burgundy-deep) 85%, transparent)); }
 @media (max-width: 767px) {
-  .film-opening { min-height: max(620px, calc(100svh - 125px)); }
+  .film-opening { min-height: max(455px, calc(100svh - 125px)); }
   .film-title { font-size: 44px; }
 }
 @media (prefers-reduced-motion: reduce) {

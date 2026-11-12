@@ -48,7 +48,7 @@ export function Header() {
         <nav className="hidden flex-1 items-center gap-5 text-sm text-cocoa min-[1100px]:flex">
           {DESKTOP_LEFT.map((item) => (
             <Link key={item.to} to={item.to} className="transition-colors hover:text-espresso">
-               {item.to === "/" ? text("nav.home", item.label) : item.to === "/shop" ? text("nav.shop", item.label) : item.label}
+               {item.to === "/" ? text("nav.home", item.label) : text("nav.shop", item.label)}
             </Link>
           ))}
         </nav>
@@ -67,7 +67,7 @@ export function Header() {
         <Link
           to="/"
           onClick={closeMenu}
-          className="font-display text-xl text-cocoa sm:text-2xl md:text-3xl"
+          className="absolute left-1/2 -translate-x-1/2 font-display text-xl text-cocoa sm:text-2xl md:text-3xl"
         >
           MELANVÉE
         </Link>

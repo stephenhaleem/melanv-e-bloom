@@ -104,11 +104,11 @@ function Hero() {
   return (
     <section className="film-opening relative isolate overflow-hidden bg-burgundy-deep text-cream">
       <TextureFilm poster={image("image.home.hero", hero)} />
-      <div className="container-luxe relative z-[1] flex min-h-[inherit] flex-col items-center justify-between py-10 text-center md:py-12 pointer-events-none">
+      <div className="container-luxe relative z-[1] flex min-h-[inherit] flex-col items-center justify-between py-6 text-center md:py-12 pointer-events-none">
         <h1 className="film-title">MELANVÉE</h1>
-        <div className="mx-auto mt-24 max-w-2xl pointer-events-auto">
+        <div className="mx-auto mt-8 max-w-2xl pointer-events-auto md:mt-24">
           <p className="text-xs uppercase font-medium">Textured hair, considered differently.</p>
-          <h2 className="mt-5 font-serif text-4xl leading-tight text-balance md:text-5xl">The texture you love.<br /><em>The freedom to wear it your way.</em></h2>
+          <h2 className="mt-4 font-serif text-3xl leading-tight text-balance md:text-5xl">The texture you love.<br /><em>The freedom to wear it your way.</em></h2>
           <p className="mx-auto mt-5 max-w-lg text-sm leading-relaxed text-cream/90">Discover textured wigs and protective styles designed for natural-looking blends, versatile styling and more freedom in your hair routine.</p>
           <Button asChild className="mt-7 h-12 rounded-none bg-burgundy px-8 text-xs uppercase text-cream hover:bg-burgundy-light">
             <Link to="/shop">Shop textured hair <ArrowRight /></Link>
